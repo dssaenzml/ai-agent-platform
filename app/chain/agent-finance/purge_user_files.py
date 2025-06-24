@@ -3,10 +3,8 @@ from functools import partial
 
 from langchain_core.runnables import RunnableLambda
 
-from ...model.vectordb_file_model import \
-    UserFilePurgingOutput as FilePurgingOutput
-from ...model.vectordb_file_model import \
-    UserFilePurgingRequest as FilePurgingRequest
+from ...model.vectordb_file_model import UserFilePurgingOutput as FilePurgingOutput
+from ...model.vectordb_file_model import UserFilePurgingRequest as FilePurgingRequest
 from ...vector_db.agent_finance import kbm
 from ..purge_files import _purge_files
 

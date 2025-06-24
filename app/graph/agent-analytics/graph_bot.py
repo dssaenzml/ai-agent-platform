@@ -7,8 +7,7 @@ from langgraph.graph import END, START, StateGraph
 from typing_extensions import TypedDict
 
 from ...prompt.agent_analytics.bot import prompt as enterprise_context
-from ..response_graph_node import (generate, generate_simple,
-                                   request_refined_query)
+from ..response_graph_node import generate, generate_simple, request_refined_query
 from ..utils_graph_edge import decide_how_to_respond
 from ..utils_graph_node import final_answer, image_parsing
 from .graph_edge import query_router

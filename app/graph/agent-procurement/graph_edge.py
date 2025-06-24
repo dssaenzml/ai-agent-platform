@@ -4,8 +4,7 @@ from langchain_core.messages import AIMessage
 from openai import BadRequestError
 from qdrant_client import models
 
-from ...chain.agent_procurement.query_classifier import \
-    classifier as query_classifier
+from ...chain.agent_procurement.query_classifier import classifier as query_classifier
 from ...chain.documents_summarizer import summarizer
 from ...chain.moderator import query_grader as moderator
 from ...chain.query_rag_rewriter import query_rewriter

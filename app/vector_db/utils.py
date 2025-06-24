@@ -11,8 +11,11 @@ import magic
 from azure.identity import ClientSecretCredential
 from azure.storage.blob import BlobClient, ContentSettings
 from langchain_community.document_loaders import (
-    UnstructuredExcelLoader, UnstructuredPDFLoader,
-    UnstructuredPowerPointLoader, UnstructuredWordDocumentLoader)
+    UnstructuredExcelLoader,
+    UnstructuredPDFLoader,
+    UnstructuredPowerPointLoader,
+    UnstructuredWordDocumentLoader,
+)
 from langchain_qdrant import QdrantVectorStore as VectorStore
 from langchain_qdrant import RetrievalMode
 from langchain_text_splitters import RecursiveCharacterTextSplitter

@@ -6,9 +6,11 @@ from ..chain.answer_grader import answer_grader
 from ..chain.documents_summarizer import summarizer
 from ..chain.hallucination_grader import hallucination_grader
 from ..chain.moderator import query_grader as moderator
-from ..chain.query_classifier import (simple_rag_web_img_pdf_query_classifier,
-                                      simple_rag_web_img_query_classifier,
-                                      simple_rag_web_query_classifier)
+from ..chain.query_classifier import (
+    simple_rag_web_img_pdf_query_classifier,
+    simple_rag_web_img_query_classifier,
+    simple_rag_web_query_classifier,
+)
 from ..chain.query_rag_rewriter import query_rewriter
 from ..vector_db.utils import KnowledgeBaseManager
 from .utils import generate_individual_docs_filter

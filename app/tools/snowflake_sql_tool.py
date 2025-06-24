@@ -1,8 +1,10 @@
 import logging
 from typing import Any, Dict, List, Optional, Type
 
-from langchain_core.callbacks import (AsyncCallbackManagerForToolRun,
-                                      CallbackManagerForToolRun)
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from langchain_core.tools import BaseTool, ToolException
 from pydantic import BaseModel, SecretStr
 

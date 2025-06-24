@@ -4,8 +4,7 @@ from docx import Document
 
 from ...vector_db.agent_general import kbm
 from ..document_gen_tool import DocumentGeneratorTool
-from ..tool_wrapper.document_gen_tool_wrapper import \
-    DocumentGeneratorToolWrapper
+from ..tool_wrapper.document_gen_tool_wrapper import DocumentGeneratorToolWrapper
 
 
 # SoW template function

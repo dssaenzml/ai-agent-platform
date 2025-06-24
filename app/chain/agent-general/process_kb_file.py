@@ -4,10 +4,10 @@ from typing import AsyncIterator
 
 from langchain_core.runnables import RunnableConfig, RunnableLambda
 
-from ...model.vectordb_file_model import \
-    KBFileProcessingOutput as FileProcessingOutput
-from ...model.vectordb_file_model import \
-    KBFileProcessingRequest as FileProcessingRequest
+from ...model.vectordb_file_model import KBFileProcessingOutput as FileProcessingOutput
+from ...model.vectordb_file_model import (
+    KBFileProcessingRequest as FileProcessingRequest,
+)
 from ...vector_db.agent_general import kbm
 from ..process_file import _process_file
 

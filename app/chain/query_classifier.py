@@ -1,12 +1,16 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from ..llm_model.azure_llm import grader_model
-from ..model.grader_model import (SimpleRAGWebGradeQuery,
-                                  SimpleRAGWebImgGradeQuery,
-                                  SimpleRAGWebImgPDFGradeQuery)
-from ..prompt.query_classifier import (simple_rag_web_img_pdf_system_prompt,
-                                       simple_rag_web_img_system_prompt,
-                                       simple_rag_web_system_prompt)
+from ..model.grader_model import (
+    SimpleRAGWebGradeQuery,
+    SimpleRAGWebImgGradeQuery,
+    SimpleRAGWebImgPDFGradeQuery,
+)
+from ..prompt.query_classifier import (
+    simple_rag_web_img_pdf_system_prompt,
+    simple_rag_web_img_system_prompt,
+    simple_rag_web_system_prompt,
+)
 
 ## Simple vs RAG vs Web query classifier
 # LLM with function call

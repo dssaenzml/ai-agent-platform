@@ -6,12 +6,13 @@ from langchain_core.messages import AIMessage
 from langchain_core.runnables import RunnableConfig
 
 from ...chain.agent_procurement.sow_info_gatherer import (
-    consultancy_services_sow_details_gatherer, sow_type_gatherer)
+    consultancy_services_sow_details_gatherer,
+    sow_type_gatherer,
+)
 from ...chain.file_gen_assistant import assistant
 from ...chain.filename_generator import filename_generator
 from ...memory.checkpointer_snowflake import SnowflakeSaver
-from ...tools.agent_procurement.doc_gen_tool import \
-    consultancy_services_sow_tool
+from ...tools.agent_procurement.doc_gen_tool import consultancy_services_sow_tool
 
 # from ...tools.agent_procurement.send_email_tool import (
 #     tool as send_email_tool,

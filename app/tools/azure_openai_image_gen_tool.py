@@ -1,16 +1,17 @@
 import logging
 from typing import Any, Dict, Optional, Type
 
-from langchain_core.callbacks import (AsyncCallbackManagerForToolRun,
-                                      CallbackManagerForToolRun)
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from langchain_core.tools import BaseTool, ToolException
 from openai import BadRequestError
 from pydantic import BaseModel
 
 from ..model.file_gen_model import ImageGenerationInput
 from ..vector_db.utils import KnowledgeBaseManager
-from .tool_wrapper.azure_openai_image_gen_api_wrapper import \
-    AzureDallEAPIWrapper
+from .tool_wrapper.azure_openai_image_gen_api_wrapper import AzureDallEAPIWrapper
 
 logger = logging.getLogger(__name__)
 

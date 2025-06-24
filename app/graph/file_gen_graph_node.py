@@ -7,8 +7,7 @@ from langchain_core.runnables import RunnableConfig
 
 from ..chain.file_gen_assistant import assistant
 from ..chain.file_generator import html_writer
-from ..chain.filename_generator import \
-    html_filename_generator as filename_generator
+from ..chain.filename_generator import html_filename_generator as filename_generator
 from ..chain.query_image_gen_rewriter import query_rewriter
 from ..memory.checkpointer_snowflake import SnowflakeSaver
 from ..tools.agent_general.file_gen_tool import image_gen_tool, pdf_gen_tool

@@ -4,16 +4,25 @@ from operator import itemgetter
 from typing import AsyncIterator
 
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import (ConfigurableFieldSpec, RunnableConfig,
-                                      RunnableLambda)
+from langchain_core.runnables import (
+    ConfigurableFieldSpec,
+    RunnableConfig,
+    RunnableLambda,
+)
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from ...graph.agent_realestate.graph_bot import app as chat_agent
 from ...memory.session_factory import create_session_factory
-from ...model.agent_realestate.bot_model import (ConversationInputChat,
-                                                 ConversationOutputChat)
-from ..utils import (format_username, get_current_timestamp,
-                     get_image_type_data, itemgetter_with_default)
+from ...model.agent_realestate.bot_model import (
+    ConversationInputChat,
+    ConversationOutputChat,
+)
+from ..utils import (
+    format_username,
+    get_current_timestamp,
+    get_image_type_data,
+    itemgetter_with_default,
+)
 
 logger = logging.getLogger(__name__)
 

@@ -7,16 +7,16 @@ from openai import BadRequestError
 from sse_starlette import EventSourceResponse
 
 from ...chain.agent_hr.process_kb_file import process_file as process_kb_file
-from ...chain.agent_hr.process_kb_file import \
-    process_file_stream as process_kb_file_stream
-from ...chain.agent_hr.process_user_file import \
-    process_file as process_user_file
-from ...chain.agent_hr.process_user_file import \
-    process_file_stream as process_user_file_stream
+from ...chain.agent_hr.process_kb_file import (
+    process_file_stream as process_kb_file_stream,
+)
+from ...chain.agent_hr.process_user_file import process_file as process_user_file
+from ...chain.agent_hr.process_user_file import (
+    process_file_stream as process_user_file_stream,
+)
 from ...chain.agent_hr.purge_kb_files import purge_files as purge_kb_files
 from ...chain.agent_hr.purge_user_files import purge_files as purge_user_files
-from ...chain.agent_hr.qa_bot import (conversational_chain,
-                                      conversational_chain_stream)
+from ...chain.agent_hr.qa_bot import conversational_chain, conversational_chain_stream
 from ...chain.topic_summarizer import topic_summary_chain
 from ...helpers.utils import _per_request_config_modifier
 

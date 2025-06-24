@@ -9,8 +9,9 @@ from langgraph.graph import END, START, StateGraph
 from qdrant_client import models
 from typing_extensions import TypedDict
 
-from ...chain.agent_general.avatar_query_rag_rewriter import \
-    query_rewriter as query_rag_rewriter
+from ...chain.agent_general.avatar_query_rag_rewriter import (
+    query_rewriter as query_rag_rewriter,
+)
 from ...chain.agent_general.avatar_response_generator import response_generator
 from ...prompt.agent_general.bot import prompt as enterprise_context
 from ...vector_db.agent_general import avatar_kbm as kbm

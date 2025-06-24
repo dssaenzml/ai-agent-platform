@@ -1,8 +1,10 @@
 from ...config import config
-from ..azure_send_email_tool import \
-    AzureCommunicationServiceSendEmailTool as SendEmailTool
-from ..tool_wrapper.azure_send_email_api_wrapper import \
-    AzureCommunicationServiceSendEmailAPIWrapper as SendEmailAPIWrapper
+from ..azure_send_email_tool import (
+    AzureCommunicationServiceSendEmailTool as SendEmailTool,
+)
+from ..tool_wrapper.azure_send_email_api_wrapper import (
+    AzureCommunicationServiceSendEmailAPIWrapper as SendEmailAPIWrapper,
+)
 
 ACS_CONNECTION_STRING = config.ACS_CONNECTION_STRING
 

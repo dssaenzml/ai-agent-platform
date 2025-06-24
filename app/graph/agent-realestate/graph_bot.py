@@ -10,14 +10,16 @@ from typing_extensions import TypedDict
 from ...prompt.agent_realestate.bot import prompt as enterprise_context
 from ...vector_db.agent_realestate import kbm
 from ..rag_graph_node import grade_rag, retrieve, transform_query_for_rag
-from ..response_graph_node import (generate, generate_simple,
-                                   request_refined_query)
+from ..response_graph_node import generate, generate_simple, request_refined_query
 from ..utils import get_update
 from ..utils_graph_edge import decide_how_to_respond, decide_to_search_web
 from ..utils_graph_edge import simple_rag_web_query_router as query_router
 from ..utils_graph_node import final_answer, image_parsing
-from ..web_search_graph_node import (grade_web, transform_query_for_web_search,
-                                     web_search)
+from ..web_search_graph_node import (
+    grade_web,
+    transform_query_for_web_search,
+    web_search,
+)
 
 logger = logging.getLogger(__name__)
 

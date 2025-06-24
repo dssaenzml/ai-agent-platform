@@ -1,15 +1,16 @@
 import logging
 from typing import Any, Dict, Optional, Type
 
-from langchain_core.callbacks import (AsyncCallbackManagerForToolRun,
-                                      CallbackManagerForToolRun)
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from langchain_core.tools import BaseTool, ToolException
 from pydantic import BaseModel
 
 from ..model.file_gen_model import WordDocumentGeneratorInput
 from ..vector_db.utils import KnowledgeBaseManager
-from .tool_wrapper.document_gen_tool_wrapper import \
-    DocumentGeneratorToolWrapper
+from .tool_wrapper.document_gen_tool_wrapper import DocumentGeneratorToolWrapper
 
 logger = logging.getLogger(__name__)
 

@@ -1,14 +1,17 @@
 import logging
 from typing import Any, Dict, Optional, Type
 
-from langchain_core.callbacks import (AsyncCallbackManagerForToolRun,
-                                      CallbackManagerForToolRun)
+from langchain_core.callbacks import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from langchain_core.tools import BaseTool, ToolException
 from pydantic import BaseModel, SecretStr
 
 from ..model.ms_graph_model import UserProfileMSGraphQueryInput
-from .tool_wrapper.user_profile_ms_graph_tool_wrapper import \
-    UserProfileMSGraphToolWrapper
+from .tool_wrapper.user_profile_ms_graph_tool_wrapper import (
+    UserProfileMSGraphToolWrapper,
+)
 
 logger = logging.getLogger(__name__)
 

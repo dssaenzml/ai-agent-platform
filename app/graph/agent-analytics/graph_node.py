@@ -15,8 +15,7 @@ from langchain_core.runnables import RunnableConfig
 from langchain_core.tools.base import ToolException
 
 from ...memory.session_factory import create_session_factory
-from ...tools.agent_analytics.sql_chart_gen_tool import \
-    tool as sql_chart_gen_tool
+from ...tools.agent_analytics.sql_chart_gen_tool import tool as sql_chart_gen_tool
 from ...tools.agent_analytics.sql_query_tool import tool as sql_query_tool
 
 logger = logging.getLogger(__name__)

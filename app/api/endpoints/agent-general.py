@@ -6,32 +6,38 @@ from langserve import APIHandler
 from openai import BadRequestError
 from sse_starlette import EventSourceResponse
 
-from ...chain.agent_general.avatar_process_kb_file import \
-    process_file as avatar_process_kb_file
-from ...chain.agent_general.avatar_process_kb_file import \
-    process_file_stream as avatar_process_kb_file_stream
-from ...chain.agent_general.avatar_purge_kb_files import \
-    purge_files as avatar_purge_kb_files
-from ...chain.agent_general.avatar_qa_bot import \
-    conversational_chain as avatar_chain
-from ...chain.agent_general.avatar_qa_bot import \
-    conversational_chain_stream as avatar_chain_stream
-from ...chain.agent_general.process_kb_file import \
-    process_file as process_kb_file
-from ...chain.agent_general.process_kb_file import \
-    process_file_stream as process_kb_file_stream
-from ...chain.agent_general.process_user_file import \
-    process_file as process_user_file
-from ...chain.agent_general.process_user_file import \
-    process_file_stream as process_user_file_stream
+from ...chain.agent_general.avatar_process_kb_file import (
+    process_file as avatar_process_kb_file,
+)
+from ...chain.agent_general.avatar_process_kb_file import (
+    process_file_stream as avatar_process_kb_file_stream,
+)
+from ...chain.agent_general.avatar_purge_kb_files import (
+    purge_files as avatar_purge_kb_files,
+)
+from ...chain.agent_general.avatar_qa_bot import conversational_chain as avatar_chain
+from ...chain.agent_general.avatar_qa_bot import (
+    conversational_chain_stream as avatar_chain_stream,
+)
+from ...chain.agent_general.process_kb_file import process_file as process_kb_file
+from ...chain.agent_general.process_kb_file import (
+    process_file_stream as process_kb_file_stream,
+)
+from ...chain.agent_general.process_user_file import process_file as process_user_file
+from ...chain.agent_general.process_user_file import (
+    process_file_stream as process_user_file_stream,
+)
 from ...chain.agent_general.purge_kb_files import purge_files as purge_kb_files
-from ...chain.agent_general.purge_user_files import \
-    purge_files as purge_user_files
-from ...chain.agent_general.qa_bot import (conversational_chain,
-                                           conversational_chain_stream)
+from ...chain.agent_general.purge_user_files import purge_files as purge_user_files
+from ...chain.agent_general.qa_bot import (
+    conversational_chain,
+    conversational_chain_stream,
+)
 from ...chain.topic_summarizer import topic_summary_chain
-from ...helpers.utils import (_per_avatar_request_config_modifier,
-                              _per_request_config_modifier)
+from ...helpers.utils import (
+    _per_avatar_request_config_modifier,
+    _per_request_config_modifier,
+)
 
 logger = logging.getLogger(__name__)
 

@@ -7,9 +7,11 @@ from langchain_core.runnables import RunnableConfig
 from openai import BadRequestError
 
 from ..llm_model.azure_llm import chat_model
-from ..prompt.response_generator import (context_system_prompt,
-                                         refined_response_system_prompt,
-                                         simple_system_prompt)
+from ..prompt.response_generator import (
+    context_system_prompt,
+    refined_response_system_prompt,
+    simple_system_prompt,
+)
 
 logger = logging.getLogger(__name__)
 
