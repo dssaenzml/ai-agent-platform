@@ -207,14 +207,48 @@ ai-agent-platform/
 
 ### Testing
 
-Run tests with:
+The project includes comprehensive unit and integration tests.
+
+#### Run All Tests
 ```bash
-poetry run pytest tests/
+poetry run pytest
 ```
 
-Or if you're already in the Poetry shell:
+#### Run Specific Test Types
 ```bash
-pytest tests/
+# Unit tests only
+poetry run pytest tests/unit
+
+# Integration tests only  
+poetry run pytest tests/integration
+
+# API tests only
+poetry run pytest -m api
+
+# With coverage report
+poetry run pytest --cov=app --cov-report=html
+```
+
+#### Using Makefile Commands
+```bash
+make test              # Run all tests
+make test-unit         # Run unit tests
+make test-integration  # Run integration tests
+make test-coverage     # Run with coverage
+make lint             # Run code linting
+make format           # Format code
+```
+
+#### Test Structure
+```
+tests/
+├── unit/              # Unit tests
+│   ├── api/          # API endpoint tests
+│   ├── chain/        # Chain component tests
+│   ├── model/        # Data model tests
+│   └── vector_db/    # Vector database tests
+├── integration/       # Integration tests
+└── conftest.py       # Shared fixtures
 ```
 
 ## 🐳 Docker Support
