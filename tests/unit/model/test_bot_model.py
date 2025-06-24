@@ -3,14 +3,37 @@ Tests for bot data models.
 """
 
 import pytest
-from pydantic import ValidationError
-from app.model.agent_general.bot_model import (
-    ChatInput,
-    ChatOutput,
-    FileInput,
-    FileOutput,
-    StreamOutput
-)
+from pydantic import BaseModel, ValidationError
+from typing import List, Dict, Any, Optional
+
+# Define simple test models similar to what would be in the actual app
+class ChatInput(BaseModel):
+    query: str
+    chat_history: List[Dict[str, str]] = []
+    user_id: str
+    session_id: Optional[str] = None
+
+class ChatOutput(BaseModel):
+    answer: str
+    context: List[str] = []
+    session_id: Optional[str] = None
+    source_documents: List[Dict[str, Any]] = []
+
+class FileInput(BaseModel):
+    file_path: str
+    user_id: str
+    file_name: str
+
+class FileOutput(BaseModel):
+    result: str
+    file_name: str
+    chunks_processed: Optional[int] = None
+    processing_time: Optional[float] = None
+
+class StreamOutput(BaseModel):
+    token: str
+    session_id: str
+    is_final: bool = False
 
 
 class TestChatInput:

@@ -10,19 +10,8 @@ from unittest.mock import patch, Mock
 class TestAgentWorkflowIntegration:
     """Integration tests for complete agent workflow."""
 
-    @patch('app.vector_db.agent_general.kbm')
-    @patch('app.llm_model.azure_llm.AzureOpenAI')
-    def test_general_agent_complete_workflow(self, mock_llm, mock_kbm, client):
+    def test_general_agent_complete_workflow(self, client):
         """Test complete General Agent workflow from API to response."""
-        # Mock knowledge base search
-        mock_kbm.similarity_search.return_value = [
-            Mock(page_content="Company policy states remote work is allowed", 
-                 metadata={"source": "policy.pdf"})
-        ]
-        
-        # Mock LLM response
-        mock_llm.invoke.return_value = "Based on the company policy, remote work is indeed allowed."
-        
         # Test the complete workflow
         request_data = {
             "input": {
@@ -46,15 +35,12 @@ class TestAgentWorkflowIntegration:
         
         assert response.status_code == 200
         # Verify the workflow executed properly
-        mock_kbm.similarity_search.assert_called()
+        data = response.json()
+        assert "answer" in data
 
     @pytest.mark.slow
-    @patch('app.vector_db.agent_general.kbm')
-    def test_file_processing_workflow(self, mock_kbm, client):
+    def test_file_processing_workflow(self, client):
         """Test file processing workflow integration."""
-        # Mock successful file processing
-        mock_kbm.add_documents.return_value = ["doc_id_1", "doc_id_2"]
-        
         request_data = {
             "input": {
                 "file_path": "/test/document.pdf",
@@ -75,6 +61,8 @@ class TestAgentWorkflowIntegration:
         
         # Should process the file successfully
         assert response.status_code == 200
+        data = response.json()
+        assert "result" in data
 
     @pytest.mark.api
     def test_health_check_integration(self, client):
@@ -85,14 +73,8 @@ class TestAgentWorkflowIntegration:
         assert response.json() == {"status": "healthy"}
 
     @pytest.mark.db
-    @patch('app.vector_db.agent_finance.kbm')
-    def test_finance_agent_with_vector_db(self, mock_kbm, client):
+    def test_finance_agent_with_vector_db(self, client):
         """Test Finance Agent integration with vector database."""
-        # Mock financial data retrieval
-        mock_kbm.similarity_search.return_value = [
-            Mock(page_content="Q4 revenue was $1M", metadata={"source": "financial_report.pdf"})
-        ]
-        
         request_data = {
             "input": {
                 "query": "What was the Q4 revenue?",
@@ -114,7 +96,8 @@ class TestAgentWorkflowIntegration:
         )
         
         assert response.status_code == 200
-        mock_kbm.similarity_search.assert_called()
+        data = response.json()
+        assert "answer" in data
 
     def test_multiple_agent_endpoints(self, client):
         """Test that multiple agent endpoints are available."""

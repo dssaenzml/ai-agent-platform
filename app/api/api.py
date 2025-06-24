@@ -1,16 +1,18 @@
 import logging
+import importlib
 from fastapi import APIRouter
 
-from .endpoints.agent_general import router as agent_general
-from .endpoints.agent_engineering import router as agent_engineering
-from .endpoints.agent_realestate import router as agent_realestate
-from .endpoints.agent_finance import router as agent_finance
-from .endpoints.agent_hr import router as agent_hr
-from .endpoints.agent_operations import router as agent_operations
-from .endpoints.agent_analytics import router as agent_analytics
-from .endpoints.agent_workflow import router as agent_workflow
-from .endpoints.agent_procurement import router as agent_procurement
-from .endpoints.agent_automation import router as agent_automation
+# Import modules with hyphens using importlib
+agent_general = importlib.import_module("app.api.endpoints.agent-general")
+agent_engineering = importlib.import_module("app.api.endpoints.agent-engineering")
+agent_realestate = importlib.import_module("app.api.endpoints.agent-realestate")
+agent_finance = importlib.import_module("app.api.endpoints.agent-finance")
+agent_hr = importlib.import_module("app.api.endpoints.agent-hr")
+agent_operations = importlib.import_module("app.api.endpoints.agent-operations")
+agent_analytics = importlib.import_module("app.api.endpoints.agent-analytics")
+agent_workflow = importlib.import_module("app.api.endpoints.agent-workflow")
+agent_procurement = importlib.import_module("app.api.endpoints.agent-procurement")
+agent_automation = importlib.import_module("app.api.endpoints.agent-automation")
 
 # Handlers
 from .handlers.health import router as health
@@ -38,31 +40,31 @@ router.include_router(health)
 
 # Include all agents
 logger.info("Including agent-general")
-router.include_router(agent_general)
+router.include_router(agent_general.router)
 
 logger.info("Including agent-engineering")
-router.include_router(agent_engineering)
+router.include_router(agent_engineering.router)
 
 logger.info("Including agent-realestate")
-router.include_router(agent_realestate)
+router.include_router(agent_realestate.router)
 
 logger.info("Including agent-finance")
-router.include_router(agent_finance)
+router.include_router(agent_finance.router)
 
 logger.info("Including agent-hr")
-router.include_router(agent_hr)
+router.include_router(agent_hr.router)
 
 logger.info("Including agent-operations")
-router.include_router(agent_operations)
+router.include_router(agent_operations.router)
 
 logger.info("Including agent-analytics")
-router.include_router(agent_analytics)
+router.include_router(agent_analytics.router)
 
 logger.info("Including agent-workflow")
-router.include_router(agent_workflow)
+router.include_router(agent_workflow.router)
 
 logger.info("Including agent-procurement")
-router.include_router(agent_procurement)
+router.include_router(agent_procurement.router)
 
 logger.info("Including agent-automation")
-router.include_router(agent_automation)
+router.include_router(agent_automation.router)
