@@ -29,6 +29,7 @@ The platform follows a modular architecture with the following key components:
 ### Prerequisites
 
 - Python 3.11+
+- [Poetry](https://python-poetry.org/docs/#installation) for dependency management
 - Docker (optional)
 - API keys for Azure OpenAI, HuggingFace, etc.
 
@@ -40,15 +41,14 @@ git clone https://github.com/dssaenzml/ai-agent-platform.git
 cd ai-agent-platform
 ```
 
-2. Create a Python virtual environment:
+2. Install dependencies with Poetry:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+poetry install
 ```
 
-3. Install dependencies:
+3. Activate the Poetry environment:
 ```bash
-pip install -r requirements.txt
+poetry shell
 ```
 
 4. Configure environment variables:
@@ -60,6 +60,11 @@ cp .dev_env .env
 ### Running Locally
 
 Start the development server:
+```bash
+poetry run uvicorn app.server:app --host 0.0.0.0 --port 8080 --env-file .env
+```
+
+Or if you're already in the Poetry shell:
 ```bash
 uvicorn app.server:app --host 0.0.0.0 --port 8080 --env-file .env
 ```
@@ -141,6 +146,36 @@ POST /api/v1/financeagent/financeagent_rag/stream
 
 ## 🧪 Development
 
+### Dependency Management
+
+This project uses [Poetry](https://python-poetry.org/) for dependency management, which provides:
+- **Deterministic builds** with `poetry.lock`
+- **Virtual environment management** built-in
+- **Dependency resolution** and conflict detection
+- **Easy package publishing** (if needed)
+
+### Useful Poetry Commands
+
+```bash
+# Install dependencies
+poetry install
+
+# Add a new dependency
+poetry add package-name
+
+# Add a development dependency
+poetry add --group dev package-name
+
+# Update dependencies
+poetry update
+
+# Show dependency tree
+poetry show --tree
+
+# Export requirements.txt (if needed for Docker)
+poetry export -f requirements.txt --output requirements.txt
+```
+
 ### Project Structure
 
 ```
@@ -174,7 +209,12 @@ ai-agent-platform/
 
 Run tests with:
 ```bash
-python -m pytest tests/
+poetry run pytest tests/
+```
+
+Or if you're already in the Poetry shell:
+```bash
+pytest tests/
 ```
 
 ## 🐳 Docker Support
