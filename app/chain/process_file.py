@@ -1,24 +1,17 @@
-import os
-
-import logging
-
-import re
-import magic
 import base64
-
-import aiofiles
-
+import logging
+import os
+import re
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+import aiofiles
+import magic
 from fastapi import HTTPException
-
-from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks.manager import adispatch_custom_event
-
-from qdrant_client import models
-
+from langchain_core.runnables import RunnableConfig
 from langserve import CustomUserType
+from qdrant_client import models
 
 from ..vector_db.utils import KnowledgeBaseManager
 

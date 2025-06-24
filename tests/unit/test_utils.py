@@ -2,8 +2,9 @@
 Tests for utility functions.
 """
 
-import pytest
 from unittest.mock import Mock, patch
+
+import pytest
 
 # Mock the utility functions instead of importing them directly
 

@@ -1,15 +1,12 @@
 import logging
 
-from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks.manager import adispatch_custom_event
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
-
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables import RunnableConfig
 from openai import BadRequestError
 
-from ..llm_model.azure_llm import (
-    helper_model,
-)
+from ..llm_model.azure_llm import helper_model
 
 logger = logging.getLogger(__name__)
 

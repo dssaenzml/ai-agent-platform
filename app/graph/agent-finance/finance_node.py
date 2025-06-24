@@ -3,7 +3,6 @@ import logging
 from qdrant_client import models
 
 from ...chain.agent_finance.finance_info_gatherer import gatherer
-
 from ...vector_db.utils import KnowledgeBaseManager
 
 logger = logging.getLogger(__name__)

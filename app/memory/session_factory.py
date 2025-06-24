@@ -1,15 +1,12 @@
-import re
-
 import logging
+import re
 from typing import Callable
 
 from fastapi import HTTPException
-
 from langchain_core.chat_history import BaseChatMessageHistory
 
-from .chat_history_snowflake import SnowflakeChatMessageHistory
-
 from ..config import config
+from .chat_history_snowflake import SnowflakeChatMessageHistory
 
 logger = logging.getLogger(__name__)
 

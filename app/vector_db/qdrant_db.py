@@ -1,4 +1,4 @@
-from qdrant_client import QdrantClient, AsyncQdrantClient
+from qdrant_client import AsyncQdrantClient, QdrantClient
 
 from ..config import config
 

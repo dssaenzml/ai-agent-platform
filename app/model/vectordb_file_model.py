@@ -1,6 +1,5 @@
-from pydantic import Field
-
 from langserve import CustomUserType
+from pydantic import Field
 
 
 class KBFileProcessingRequest(CustomUserType):

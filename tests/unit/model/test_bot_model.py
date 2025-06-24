@@ -2,9 +2,10 @@
 Tests for bot data models.
 """
 
+from typing import Any, Dict, List, Optional
+
 import pytest
 from pydantic import BaseModel, ValidationError
-from typing import List, Dict, Any, Optional
 
 
 # Define simple test models similar to what would be in the actual app

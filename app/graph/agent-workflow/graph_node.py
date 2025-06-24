@@ -1,21 +1,15 @@
-import logging
-
-import re
 import json
+import logging
+import re
 
 from langchain.schema import Document
-
-from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks.manager import adispatch_custom_event
-from langchain_core.messages import (
-    AIMessage,
-    HumanMessage,
-)
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.runnables import RunnableConfig
 from langchain_core.tools.base import ToolException
 
-from ...tools.agent_workflow.sql_query_tool import tool as sql_query_tool
-
 from ...memory.session_factory import create_session_factory
+from ...tools.agent_workflow.sql_query_tool import tool as sql_query_tool
 
 logger = logging.getLogger(__name__)
 

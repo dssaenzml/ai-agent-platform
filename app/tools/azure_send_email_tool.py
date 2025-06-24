@@ -1,20 +1,14 @@
 import logging
-
 from typing import Any, Dict, Optional, Type
 
+from langchain_core.callbacks import (AsyncCallbackManagerForToolRun,
+                                      CallbackManagerForToolRun)
+from langchain_core.tools import BaseTool, ToolException
 from pydantic import BaseModel
 
-from langchain_core.callbacks import (
-    AsyncCallbackManagerForToolRun,
-    CallbackManagerForToolRun,
-)
-from langchain_core.tools import BaseTool, ToolException
-
-from .tool_wrapper.azure_send_email_api_wrapper import (
-    AzureCommunicationServiceSendEmailAPIWrapper,
-)
-
 from ..model.send_email_model import SendEmailInput
+from .tool_wrapper.azure_send_email_api_wrapper import \
+    AzureCommunicationServiceSendEmailAPIWrapper
 
 logger = logging.getLogger(__name__)
 

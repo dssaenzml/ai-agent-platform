@@ -1,28 +1,19 @@
-import os
 import logging
+import os
 
-from fastapi import FastAPI, Depends
-from fastapi.responses import (
-    RedirectResponse,
-    PlainTextResponse,
-    JSONResponse,
-)
+from fastapi import Depends, FastAPI
 from fastapi.exceptions import RequestValidationError
-
-from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
-from fastapi.openapi.utils import get_openapi
-
 from fastapi.middleware.cors import CORSMiddleware
-
-from starlette.requests import Request
+from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
+from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse, PlainTextResponse, RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.requests import Request
 
 from .api.api import router as api_router
-
-from .helpers.utils import RequestLoggingMiddleware
-from .helpers.security import get_api_key
-
 from .config import config
+from .helpers.security import get_api_key
+from .helpers.utils import RequestLoggingMiddleware
 
 # Configure logging
 logging.basicConfig(

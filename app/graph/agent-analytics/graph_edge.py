@@ -2,13 +2,9 @@ import logging
 
 from openai import BadRequestError
 
-from ...chain.moderator import (
-    query_grader as moderator,
-)
-
-from ...chain.agent_analytics.query_classifier import (
-    classifier as query_classifier,
-)
+from ...chain.agent_analytics.query_classifier import \
+    classifier as query_classifier
+from ...chain.moderator import query_grader as moderator
 
 logger = logging.getLogger(__name__)
 

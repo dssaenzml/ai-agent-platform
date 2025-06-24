@@ -1,8 +1,7 @@
 import logging
 
-from pydantic import BaseModel, SecretStr
-
 import requests
+from pydantic import BaseModel, SecretStr
 
 logger = logging.getLogger(__name__)
 

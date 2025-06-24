@@ -1,21 +1,13 @@
 import logging
 
+from openai import BadRequestError
 from qdrant_client import models
 
-from openai import BadRequestError
-
-from ...chain.moderator import (
-    query_grader as moderator,
-)
-
-from ...chain.query_rag_rewriter import query_rewriter
-
+from ...chain.agent_workflow.query_classifier import \
+    classifier as query_classifier
 from ...chain.documents_summarizer import summarizer
-
-from ...chain.agent_workflow.query_classifier import (
-    classifier as query_classifier,
-)
-
+from ...chain.moderator import query_grader as moderator
+from ...chain.query_rag_rewriter import query_rewriter
 from ...vector_db.utils import KnowledgeBaseManager
 
 logger = logging.getLogger(__name__)

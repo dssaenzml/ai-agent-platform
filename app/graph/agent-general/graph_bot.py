@@ -1,62 +1,30 @@
 import logging
-
-from typing import Tuple, List, Annotated
-from typing_extensions import TypedDict
-
 import re
-
-from operator import add
-
 from functools import partial
+from operator import add
+from typing import Annotated, List, Tuple
 
 from langchain.schema import Document
-
-from langgraph.graph import StateGraph, START, END
-
-from ..rag_graph_node import (
-    transform_query_for_rag,
-    doc_retrieve,
-    retrieve,
-    grade_rag,
-)
-
-from ..web_search_graph_node import (
-    transform_query_for_web_search,
-    web_search,
-    grade_web,
-)
-
-from ..file_gen_graph_node import (
-    transform_query_for_image_gen,
-    image_generation,
-    pdf_generation,
-)
-
-from ..response_graph_node import (
-    request_refined_query,
-    generate_simple,
-    generate,
-)
-
-from ..utils_graph_node import (
-    image_parsing,
-    final_answer,
-)
-
-from ..utils_graph_edge import (
-    simple_rag_web_img_pdf_query_router as query_router,
-    rag_router,
-    decide_to_search_web,
-    decide_how_to_respond,
-)
-
-from ..utils import get_update
-
-from ...prompt.agent_general.bot import prompt as enterprise_context
+from langgraph.graph import END, START, StateGraph
+from typing_extensions import TypedDict
 
 from ...memory.checkpoint_factory import create_checkpoint_factory
-
+from ...prompt.agent_general.bot import prompt as enterprise_context
 from ...vector_db.agent_general import kbm
+from ..file_gen_graph_node import (image_generation, pdf_generation,
+                                   transform_query_for_image_gen)
+from ..rag_graph_node import (doc_retrieve, grade_rag, retrieve,
+                              transform_query_for_rag)
+from ..response_graph_node import (generate, generate_simple,
+                                   request_refined_query)
+from ..utils import get_update
+from ..utils_graph_edge import (decide_how_to_respond, decide_to_search_web,
+                                rag_router)
+from ..utils_graph_edge import \
+    simple_rag_web_img_pdf_query_router as query_router
+from ..utils_graph_node import final_answer, image_parsing
+from ..web_search_graph_node import (grade_web, transform_query_for_web_search,
+                                     web_search)
 
 logger = logging.getLogger(__name__)
 

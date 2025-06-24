@@ -1,6 +1,5 @@
-from .utils import KnowledgeBaseManager
-
 from ..config import config
+from .utils import KnowledgeBaseManager
 
 BOT_NAME = "HRAgent"
 

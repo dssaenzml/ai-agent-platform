@@ -1,46 +1,27 @@
+import asyncio
+import base64
+import logging
+import mimetypes
 import os
 import re
-
-import magic
-import mimetypes
-
 import uuid
-import base64
 from datetime import datetime
 
-import logging
-
-import asyncio
-
-from langchain_community.document_loaders import (
-    UnstructuredPDFLoader,
-    UnstructuredPowerPointLoader,
-    UnstructuredExcelLoader,
-    UnstructuredWordDocumentLoader,
-)
-
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-from langchain_qdrant import RetrievalMode, QdrantVectorStore as VectorStore
-
-from qdrant_client.models import VectorParams, Distance
-
+import magic
 from azure.identity import ClientSecretCredential
-from azure.storage.blob import (
-    BlobClient,
-    ContentSettings,
-)
-
-from .qdrant_db import (
-    client,
-    aclient,
-)
-
-from ..embedding_model.azure_emb import embeddings_model
+from azure.storage.blob import BlobClient, ContentSettings
+from langchain_community.document_loaders import (
+    UnstructuredExcelLoader, UnstructuredPDFLoader,
+    UnstructuredPowerPointLoader, UnstructuredWordDocumentLoader)
+from langchain_qdrant import QdrantVectorStore as VectorStore
+from langchain_qdrant import RetrievalMode
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from qdrant_client.models import Distance, VectorParams
 
 from ..chain.rag_payload_rewriter import rag_payload_rewriter
-
 from ..config import Config
+from ..embedding_model.azure_emb import embeddings_model
+from .qdrant_db import aclient, client
 
 logger = logging.getLogger(__name__)
 

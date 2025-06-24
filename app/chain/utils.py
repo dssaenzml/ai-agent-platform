@@ -1,24 +1,18 @@
-import logging
-
-from typing import Tuple
-
-from pydantic import SecretStr
-
-from fastapi import HTTPException
-
-from datetime import datetime
-from zoneinfo import ZoneInfo
-
-import io
 import base64
-from PIL import Image, UnidentifiedImageError
+import io
+import logging
+from datetime import datetime
+from typing import Tuple
+from zoneinfo import ZoneInfo
 
 from azure.identity import ClientSecretCredential
 from azure.storage.blob import BlobClient
-
-from ..tools.agent_general.ms_graph_tool import tool as user_profile_tool
+from fastapi import HTTPException
+from PIL import Image, UnidentifiedImageError
+from pydantic import SecretStr
 
 from ..config import config
+from ..tools.agent_general.ms_graph_tool import tool as user_profile_tool
 
 logger = logging.getLogger(__name__)
 

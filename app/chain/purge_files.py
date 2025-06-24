@@ -1,18 +1,13 @@
-import re
-
 import logging
-
-from fastapi import HTTPException
-
-from langchain_core.runnables import RunnableConfig
-from langchain_core.callbacks.manager import adispatch_custom_event
+import re
 
 from azure.identity import ClientSecretCredential
 from azure.storage.blob import ContainerClient
-
-from qdrant_client import models
-
+from fastapi import HTTPException
+from langchain_core.callbacks.manager import adispatch_custom_event
+from langchain_core.runnables import RunnableConfig
 from langserve import CustomUserType
+from qdrant_client import models
 
 from ..vector_db.utils import KnowledgeBaseManager
 

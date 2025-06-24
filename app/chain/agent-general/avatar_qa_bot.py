@@ -1,31 +1,20 @@
-import re
-
 import logging
-
+import re
+from operator import itemgetter
 from typing import AsyncIterator
 
-from operator import itemgetter
-
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import (ConfigurableFieldSpec, RunnableConfig,
+                                      RunnableLambda)
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-from langchain_core.runnables import (
-    RunnableConfig,
-    RunnableLambda,
-    ConfigurableFieldSpec,
-)
-
-from langchain_core.output_parsers import StrOutputParser
-
-from ..utils import get_current_timestamp
-
-from ...model.agent_general.bot_model import (
-    AvatarConversationInputChat as ConversationInputChat,
-    AvatarConversationOutputChat as ConversationOutputChat,
-)
-
 from ...graph.agent_general.avatar_graph_bot import app as chat_agent
-
 from ...memory.session_factory import create_session_factory
+from ...model.agent_general.bot_model import \
+    AvatarConversationInputChat as ConversationInputChat
+from ...model.agent_general.bot_model import \
+    AvatarConversationOutputChat as ConversationOutputChat
+from ..utils import get_current_timestamp
 
 logger = logging.getLogger(__name__)
 

@@ -1,17 +1,14 @@
 import logging
-
 from functools import partial
 
 from langchain_core.runnables import RunnableLambda
 
-from ..purge_files import _purge_files
-
-from ...model.vectordb_file_model import (
-    UserFilePurgingRequest as FilePurgingRequest,
-    UserFilePurgingOutput as FilePurgingOutput,
-)
-
+from ...model.vectordb_file_model import \
+    UserFilePurgingOutput as FilePurgingOutput
+from ...model.vectordb_file_model import \
+    UserFilePurgingRequest as FilePurgingRequest
 from ...vector_db.agent_workflow import kbm
+from ..purge_files import _purge_files
 
 logger = logging.getLogger(__name__)
 

@@ -1,36 +1,19 @@
-import re
-
 import logging
-
+import re
+from operator import itemgetter
 from typing import AsyncIterator
 
-from operator import itemgetter
-
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import (ConfigurableFieldSpec, RunnableConfig,
+                                      RunnableLambda)
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-from langchain_core.runnables import (
-    RunnableConfig,
-    RunnableLambda,
-    ConfigurableFieldSpec,
-)
-
-from langchain_core.output_parsers import StrOutputParser
-
-from ..utils import (
-    format_username,
-    get_current_timestamp,
-    get_image_type_data,
-    itemgetter_with_default,
-)
-
-from ...model.agent_procurement.bot_model import (
-    ConversationInputChat,
-    ConversationOutputChat,
-)
-
 from ...graph.agent_procurement.graph_bot import app as chat_agent
-
 from ...memory.session_factory import create_session_factory
+from ...model.agent_procurement.bot_model import (ConversationInputChat,
+                                                  ConversationOutputChat)
+from ..utils import (format_username, get_current_timestamp,
+                     get_image_type_data, itemgetter_with_default)
 
 logger = logging.getLogger(__name__)
 

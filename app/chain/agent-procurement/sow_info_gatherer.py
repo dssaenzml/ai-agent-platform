@@ -1,17 +1,8 @@
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder,
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from ...llm_model.azure_llm import (
-    helper_model,
-    long_helper_model,
-)
-
+from ...llm_model.azure_llm import helper_model, long_helper_model
 from ...model.agent_procurement.bot_model import (
-    SoWType,
-    ConsultancyServicesSoWDetails,
-)
+    ConsultancyServicesSoWDetails, SoWType)
 
 ## SoW type gatherer
 # Add tools to llm

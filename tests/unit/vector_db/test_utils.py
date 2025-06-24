@@ -2,8 +2,9 @@
 Tests for vector database utilities.
 """
 
+from unittest.mock import MagicMock, Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 
 # Mock KnowledgeBaseManager class

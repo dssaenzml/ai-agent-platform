@@ -1,9 +1,9 @@
 import logging
 from typing import Any, Dict, Optional
-from typing_extensions import Self
 
 from azure.communication.email import EmailClient
 from pydantic import BaseModel, Field, SecretStr, model_validator
+from typing_extensions import Self
 
 logger = logging.getLogger(__name__)
 

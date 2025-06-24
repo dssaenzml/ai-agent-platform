@@ -1,7 +1,5 @@
-from ..tool_wrapper.user_profile_ms_graph_tool_wrapper import (
-    UserProfileMSGraphToolWrapper,
-)
-
+from ..tool_wrapper.user_profile_ms_graph_tool_wrapper import \
+    UserProfileMSGraphToolWrapper
 from ..user_profile_ms_graph_tool import UserProfileMSGraphTool
 
 # Instantiate the UserProfileMSGraphTool

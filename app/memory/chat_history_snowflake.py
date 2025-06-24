@@ -1,17 +1,12 @@
-import os
-
 import json
-import time
-
 import logging
+import os
+import time
 from typing import List
 
 from langchain_core.chat_history import BaseChatMessageHistory
-from langchain_core.messages import (
-    BaseMessage,
-    message_to_dict,
-    messages_from_dict,
-)
+from langchain_core.messages import (BaseMessage, message_to_dict,
+                                     messages_from_dict)
 from snowflake.connector import connect
 
 logger = logging.getLogger(__name__)

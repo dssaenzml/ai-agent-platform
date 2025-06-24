@@ -1,8 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from ...llm_model.azure_llm import (
-    chat_model,
-)
+from ...llm_model.azure_llm import chat_model
 
 ## Context-aware response
 # System Prompt

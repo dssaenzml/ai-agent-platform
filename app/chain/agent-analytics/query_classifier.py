@@ -1,16 +1,8 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from ...llm_model.azure_llm import (
-    grader_model,
-)
-
-from ...model.grader_model import (
-    SimpleSQLGradeQuery,
-)
-
-from ...prompt.query_classifier import (
-    simple_kp_sql_system_prompt,
-)
+from ...llm_model.azure_llm import grader_model
+from ...model.grader_model import SimpleSQLGradeQuery
+from ...prompt.query_classifier import simple_kp_sql_system_prompt
 
 ## Simple vs SQL query classifier
 # LLM with function call

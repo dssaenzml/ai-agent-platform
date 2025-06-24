@@ -1,20 +1,15 @@
 import logging
-
+from functools import partial
 from typing import AsyncIterator
 
-from functools import partial
+from langchain_core.runnables import RunnableConfig, RunnableLambda
 
-from langchain_core.runnables import RunnableLambda
-from langchain_core.runnables import RunnableConfig
-
-from ..process_file import _process_file
-
-from ...model.vectordb_file_model import (
-    UserFileProcessingRequest as FileProcessingRequest,
-    UserFileProcessingOutput as FileProcessingOutput,
-)
-
+from ...model.vectordb_file_model import \
+    UserFileProcessingOutput as FileProcessingOutput
+from ...model.vectordb_file_model import \
+    UserFileProcessingRequest as FileProcessingRequest
 from ...vector_db.agent_finance import kbm
+from ..process_file import _process_file
 
 logger = logging.getLogger(__name__)
 

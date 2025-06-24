@@ -1,16 +1,8 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from ...llm_model.azure_llm import (
-    grader_model,
-)
-
-from ...model.grader_model import (
-    SimpleRAGWebSQLGradeQuery,
-)
-
-from ...prompt.query_classifier import (
-    simple_milahi_sql_system_prompt,
-)
+from ...llm_model.azure_llm import grader_model
+from ...model.grader_model import SimpleRAGWebSQLGradeQuery
+from ...prompt.query_classifier import simple_milahi_sql_system_prompt
 
 ## Simple vs RAG vs Web vs SQL query classifier
 # LLM with function call

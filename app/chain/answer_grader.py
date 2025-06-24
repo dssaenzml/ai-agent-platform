@@ -1,7 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from ..llm_model.azure_llm import grader_model
-
 from ..model.grader_model import GradeAnswer
 
 # LLM with function call

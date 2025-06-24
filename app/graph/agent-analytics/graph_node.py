@@ -1,31 +1,23 @@
-import re
-import json
-import pandas as pd
-
-import seaborn as sns
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
-
 import base64
+import json
+import logging
+import re
 from io import BytesIO
 
-import logging
-
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import pandas as pd
+import seaborn as sns
 from langchain.schema import Document
-
-from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks.manager import adispatch_custom_event
-from langchain_core.messages import (
-    AIMessage,
-    HumanMessage,
-)
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.runnables import RunnableConfig
 from langchain_core.tools.base import ToolException
 
-from ...tools.agent_analytics.sql_query_tool import tool as sql_query_tool
-
-from ...tools.agent_analytics.sql_chart_gen_tool import tool as sql_chart_gen_tool
-
 from ...memory.session_factory import create_session_factory
+from ...tools.agent_analytics.sql_chart_gen_tool import \
+    tool as sql_chart_gen_tool
+from ...tools.agent_analytics.sql_query_tool import tool as sql_query_tool
 
 logger = logging.getLogger(__name__)
 

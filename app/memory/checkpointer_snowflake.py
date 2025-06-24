@@ -1,11 +1,8 @@
-import logging
-
-from typing import Any, Dict
-
-import os
-
 import json
+import logging
+import os
 import time
+from typing import Any, Dict
 
 from snowflake.connector import connect
 

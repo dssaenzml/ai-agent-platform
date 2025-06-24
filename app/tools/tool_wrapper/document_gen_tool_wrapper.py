@@ -1,12 +1,11 @@
+import base64
+import io
 import logging
 from typing import Any, Callable, Dict, Optional
-from typing_extensions import Self
 
-import io
-import base64
 from docx import Document
-
 from pydantic import BaseModel, model_validator
+from typing_extensions import Self
 
 logger = logging.getLogger(__name__)
 

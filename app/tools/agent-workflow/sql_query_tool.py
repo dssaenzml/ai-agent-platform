@@ -1,8 +1,6 @@
-from ..tool_wrapper.snowflake_sql_tool_wrapper import SnowflakeSQLQueryWrapper
-
-from ..snowflake_sql_tool import SnowflakeSQLQueryTool
-
 from ...config import config
+from ..snowflake_sql_tool import SnowflakeSQLQueryTool
+from ..tool_wrapper.snowflake_sql_tool_wrapper import SnowflakeSQLQueryWrapper
 
 connection_parameters = {
     "account": config.SF_MILAHI_ACCOUNT,

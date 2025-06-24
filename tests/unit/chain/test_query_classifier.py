@@ -2,8 +2,9 @@
 Tests for query classification chain.
 """
 
-import pytest
 from unittest.mock import Mock, patch
+
+import pytest
 
 
 # Mock QueryClassifier class instead of importing

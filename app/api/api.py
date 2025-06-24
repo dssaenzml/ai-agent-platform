@@ -1,5 +1,6 @@
-import logging
 import importlib
+import logging
+
 from fastapi import APIRouter
 
 # Import modules with hyphens using importlib

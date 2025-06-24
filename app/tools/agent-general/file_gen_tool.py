@@ -1,18 +1,11 @@
-from ..tool_wrapper.azure_openai_image_gen_api_wrapper import (
-    AzureDallEAPIWrapper as ImageGeneratorAPIWrapper,
-)
-
-from ..azure_openai_image_gen_tool import (
-    AzureOpenAIImageGenerationTool as ImageGenerationTool,
-)
-
-from ..tool_wrapper.pdf_gen_tool_wrapper import PDFGeneratorToolWrapper
-
-from ..pdf_gen_tool import PDFGeneratorTool
-
-from ...vector_db.agent_general import kbm
-
 from ...config import config
+from ...vector_db.agent_general import kbm
+from ..azure_openai_image_gen_tool import \
+    AzureOpenAIImageGenerationTool as ImageGenerationTool
+from ..pdf_gen_tool import PDFGeneratorTool
+from ..tool_wrapper.azure_openai_image_gen_api_wrapper import \
+    AzureDallEAPIWrapper as ImageGeneratorAPIWrapper
+from ..tool_wrapper.pdf_gen_tool_wrapper import PDFGeneratorToolWrapper
 
 # Instantiate the ImageGenerationTool
 api_wrapper = ImageGeneratorAPIWrapper(

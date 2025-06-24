@@ -1,19 +1,15 @@
-import logging
-
-from typing import Any, Dict
-
-from fastapi import Request, HTTPException
-
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.responses import JSONResponse
-
-import sys
 import json
-from snowflake.connector import connect
-
+import logging
+import sys
 import time
 from datetime import datetime
+from typing import Any, Dict
 from zoneinfo import ZoneInfo
+
+from fastapi import HTTPException, Request
+from snowflake.connector import connect
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import JSONResponse
 
 from ..config import config
 

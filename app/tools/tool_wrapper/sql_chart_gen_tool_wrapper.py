@@ -1,18 +1,14 @@
-import logging
-
-from typing_extensions import Self
-
-import json
-import pandas as pd
-
 import base64
+import json
+import logging
 from io import BytesIO
 
-import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-
+import pandas as pd
+import seaborn as sns
 from pydantic import BaseModel, model_validator
+from typing_extensions import Self
 
 logger = logging.getLogger(__name__)
 

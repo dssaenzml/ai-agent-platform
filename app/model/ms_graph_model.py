@@ -1,4 +1,4 @@
-from pydantic import BaseModel, SecretStr, Field
+from pydantic import BaseModel, Field, SecretStr
 
 
 class UserProfileMSGraphQueryInput(BaseModel):

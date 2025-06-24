@@ -2,8 +2,9 @@
 Tests for retrieval grader chain.
 """
 
-import pytest
 from unittest.mock import Mock
+
+import pytest
 
 
 class TestRetrievalGrader:

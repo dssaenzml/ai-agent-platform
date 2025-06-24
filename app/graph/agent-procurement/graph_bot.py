@@ -1,64 +1,26 @@
 import logging
-
-from typing import Tuple, List, Annotated
-from typing_extensions import TypedDict
-
 import re
-
-from operator import add
-
 from functools import partial
+from operator import add
+from typing import Annotated, List, Tuple
 
 from langchain.schema import Document
-
-from langgraph.graph import StateGraph, START, END
-
-from .graph_node import (
-    gather_sow_type,
-    gather_sow_details,
-    sow_doc_generation,
-)
-
-from .graph_edge import (
-    query_router,
-    get_info_gathering_state,
-)
-
-from ..rag_graph_node import (
-    transform_query_for_rag,
-    retrieve,
-    grade_rag,
-)
-
-from ..web_search_graph_node import (
-    transform_query_for_web_search,
-    web_search,
-    grade_web,
-)
-
-from ..response_graph_node import (
-    request_refined_query,
-    generate_simple,
-    generate,
-)
-
-from ..utils_graph_node import (
-    image_parsing,
-    final_answer,
-)
-
-from ..utils_graph_edge import (
-    decide_to_search_web,
-    decide_how_to_respond,
-)
-
-from ..utils import get_update
-
-from ...prompt.agent_procurement.bot import prompt as enterprise_context
+from langgraph.graph import END, START, StateGraph
+from typing_extensions import TypedDict
 
 from ...memory.checkpoint_factory import create_checkpoint_factory
-
+from ...prompt.agent_procurement.bot import prompt as enterprise_context
 from ...vector_db.agent_procurement import kbm
+from ..rag_graph_node import grade_rag, retrieve, transform_query_for_rag
+from ..response_graph_node import (generate, generate_simple,
+                                   request_refined_query)
+from ..utils import get_update
+from ..utils_graph_edge import decide_how_to_respond, decide_to_search_web
+from ..utils_graph_node import final_answer, image_parsing
+from ..web_search_graph_node import (grade_web, transform_query_for_web_search,
+                                     web_search)
+from .graph_edge import get_info_gathering_state, query_router
+from .graph_node import gather_sow_details, gather_sow_type, sow_doc_generation
 
 logger = logging.getLogger(__name__)
 

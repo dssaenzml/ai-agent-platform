@@ -1,10 +1,9 @@
+import base64
+import io
 import logging
 
-import io
-import base64
-from weasyprint import HTML
-
 from pydantic import BaseModel
+from weasyprint import HTML
 
 logger = logging.getLogger(__name__)
 

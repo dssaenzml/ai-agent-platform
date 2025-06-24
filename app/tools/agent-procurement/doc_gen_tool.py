@@ -2,11 +2,10 @@ from typing import Any, Dict
 
 from docx import Document
 
-from ..tool_wrapper.document_gen_tool_wrapper import DocumentGeneratorToolWrapper
-
-from ..document_gen_tool import DocumentGeneratorTool
-
 from ...vector_db.agent_general import kbm
+from ..document_gen_tool import DocumentGeneratorTool
+from ..tool_wrapper.document_gen_tool_wrapper import \
+    DocumentGeneratorToolWrapper
 
 
 # SoW template function

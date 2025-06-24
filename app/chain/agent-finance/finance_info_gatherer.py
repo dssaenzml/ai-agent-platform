@@ -1,12 +1,6 @@
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder,
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from ...llm_model.azure_llm import (
-    helper_model,
-)
-
+from ...llm_model.azure_llm import helper_model
 from ...model.agent_finance.bot_model import FinanceDetails
 
 # Add tools to llm

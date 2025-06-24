@@ -4,8 +4,9 @@ Pytest configuration and shared fixtures for AI Agent Platform tests.
 
 import asyncio
 import os
-import pytest
 from unittest.mock import Mock, patch
+
+import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 

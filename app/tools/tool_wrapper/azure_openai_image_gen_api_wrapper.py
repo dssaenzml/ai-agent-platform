@@ -1,17 +1,12 @@
 import logging
 from typing import Any, Dict, Mapping, Optional, Tuple, Union
 
-from langchain_core.utils import (
-    from_env,
-    get_pydantic_field_names,
-    secret_from_env,
-)
+from langchain_community.utils.openai import is_openai_v1
+from langchain_core.utils import (from_env, get_pydantic_field_names,
+                                  secret_from_env)
+from openai import BadRequestError
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
 from typing_extensions import Self
-
-from langchain_community.utils.openai import is_openai_v1
-
-from openai import BadRequestError
 
 logger = logging.getLogger(__name__)
 

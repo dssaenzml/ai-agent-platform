@@ -1,8 +1,7 @@
 from typing import List
 
-from pydantic import BaseModel, Field, SecretStr
-
 from langchain_core.messages import BaseMessage
+from pydantic import BaseModel, Field, SecretStr
 
 
 class SnowflakeSQLQueryInput(BaseModel):

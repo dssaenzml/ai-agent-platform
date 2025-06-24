@@ -1,15 +1,9 @@
 import logging
 
-from .utils import (
-    generate_public_docs_filter,
-    generate_individual_docs_filter,
-)
-
 from ..chain.query_rag_rewriter import query_rewriter
-
 from ..chain.retrieval_grader import retrieval_grader
-
 from ..vector_db.utils import KnowledgeBaseManager
+from .utils import generate_individual_docs_filter, generate_public_docs_filter
 
 logger = logging.getLogger(__name__)
 
