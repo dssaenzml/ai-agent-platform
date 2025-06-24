@@ -1,4 +1,3 @@
-
 from langchain_core.prompts import (
     ChatPromptTemplate,
     MessagesPlaceholder,
@@ -62,7 +61,7 @@ prompt = ChatPromptTemplate.from_messages(
 )
 
 # Chain
- sow_type_gatherer = prompt | llm_with_tool
+sow_type_gatherer = prompt | llm_with_tool
 
 ## Consultancy Services Information gatherer
 # Add tools to llm
