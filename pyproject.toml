@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "ai-agent-platform"
+version = "0.1.0"
+description = "A comprehensive multi-agent AI platform built with LangChain, FastAPI, and modern AI technologies"
+authors = ["Diego Saenz <dosaenz28@gmail.com>"]
+readme = "README.md"
+keywords = ["ai", "agents", "langchain", "fastapi", "vector-database", "rag", "llm"]
+repository = "https://github.com/dssaenzml/ai-agent-platform"
+homepage = "https://github.com/dssaenzml/ai-agent-platform"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+packages = [
+    { include = "app" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+uvicorn = "^0.23.2"
+sqlalchemy = "^2.0.30"
+snowflake-snowpark-python = {extras = ["pandas"], version = "^1.18.0", python = "3.11"}
+tqdm = {version = "^4.66.4", python = "3.11"}
+unstructured = {extras = ["all-docs"], version = "^0.15.0", python = "3.11"}
+azure-storage-blob = {version = "^12.21.0", python = "3.11"}
+urllib3 = {version = "^2.2.2", python = "3.11"}
+python-magic = {version = "^0.4.27", python = "3.11"}
+unstructured-pytesseract = {version = "^0.3.12", python = "3.11"}
+opencv-python = {version = "^4.10.0.84", python = "3.11"}
+pydantic = {version = "<3", python = "3.11"}
+langchain = {version = "^0.3.1", python = "3.11"}
+langchain-core = {version = "^0.3.7", python = "3.11"}
+langchain-community = {version = "^0.3.1", python = "3.11"}
+langgraph = {version = "^0.2.32", python = "3.11"}
+azure-identity = {version = "^1.19.0", python = "3.11"}
+azure-storage-file-datalake = {version = "^12.17.0", python = "3.11"}
+aiofiles = {version = "^24.1.0", python = "3.11"}
+langchain-qdrant = {version = "^0.2.0", python = "3.11"}
+seaborn = {version = "^0.13.2", python = "3.11"}
+httpx = {version = "<0.28", python = "3.11"}
+azure-communication-email = {version = "^1.0.0", python = "3.11"}
+python-docx = {version = "^1.1.2", python = "3.11"}
+qdrant-client = {version = "<1.13.0", python = "3.11"}
+weasyprint = {version = "^64.0", python = "3.11"}
+langserve = {extras = ["server"], version = "^0.3.1", python = "3.11"}
+langchain-openai = {version = ">=0.3", python = "3.11"}
+
+
+[tool.poetry.group.dev.dependencies]
+langchain-cli = ">=0.0.15"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

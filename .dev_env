@@ -1,0 +1,70 @@
+# API details
+AI_AGENT_ENV=dev
+ROOTH_PATH=/
+API_KEY_1=your_api_key_1_here
+API_KEY_2=your_api_key_2_here
+
+# HuggingFace Access
+HUGGING_FACE_HUB_TOKEN=your_huggingface_token_here
+HF_HUB_DOWNLOAD_TIMEOUT=300
+
+# AzureOpenAI Access
+AZURE_OPENAI_LLM_DEPLOYMENT_NAME=gpt-4o
+AZURE_OPENAI_LLM_API_VERSION=2024-02-01
+AZURE_OPENAI_LLM_ENDPOINT=https://your-azure-openai-endpoint.openai.azure.com/
+AZURE_OPENAI_LLM_API_KEY=your_azure_openai_api_key_here
+
+AZURE_OPENAI_EMB_MODEL=ada
+AZURE_OPENAI_EMB_ENDPOINT=https://your-azure-openai-endpoint.openai.azure.com/
+AZURE_OPENAI_EMB_API_KEY=your_azure_openai_api_key_here
+
+AZURE_OPENAI_IMG_GEN_DEPLOYMENT_NAME=dalle3
+AZURE_OPENAI_IMG_GEN_API_VERSION=2024-02-01
+AZURE_OPENAI_IMG_GEN_ENDPOINT=https://your-azure-openai-endpoint.openai.azure.com/
+AZURE_OPENAI_IMG_GEN_API_KEY=your_azure_dalle_api_key_here
+
+# Azure Blob Storage Access
+AZ_TENANT_ID=your_azure_tenant_id_here
+AZ_CLIENT_ID=your_azure_client_id_here
+AZ_SECRET_ID=your_azure_secret_here
+DFS_ACCOUNT_URL=https://your-storage-account.dfs.core.windows.net
+BLOB_ACCOUNT_URL=https://your-storage-account.blob.core.windows.net
+BLOB_CONTAINER_NAME=ai-agent-platform
+
+# Snowflake Access
+SF_MAIN_ACCOUNT=your_snowflake_account.region.azure
+SF_MAIN_USER=your_snowflake_user
+SF_MAIN_PASSWORD=your_snowflake_password
+SF_MAIN_ROLE=your_snowflake_role
+SF_MAIN_WH=your_snowflake_warehouse
+SF_MAIN_DB=your_snowflake_database
+SF_MAIN_SCHEMA=AI_AGENT_PLATFORM
+
+SF_KP_ACCOUNT=your_snowflake_kp_account.region.azure
+SF_KP_USER=your_snowflake_kp_user
+SF_KP_PASSWORD=your_snowflake_kp_password
+SF_KP_ROLE=your_snowflake_kp_role
+SF_KP_WH=your_snowflake_kp_warehouse
+SF_KP_DB=your_snowflake_kp_database
+SF_KP_SCHEMA=your_snowflake_kp_schema
+SF_KP_STAGE=your_snowflake_stage
+SF_KP_SM=your_semantic_model.yaml
+
+SF_MILAHI_ACCOUNT=your_snowflake_milahi_account.region.azure
+SF_MILAHI_ROLE=AI_AGENT_MILAHI_ROLE
+SF_MILAHI_WH=AI_AGENT_MILAHI_WH
+SF_MILAHI_DB=your_milahi_database
+SF_MILAHI_SCHEMA=your_milahi_schema
+SF_MILAHI_STAGE=your_milahi_stage
+SF_MILAHI_SM=your_milahi_semantics.yaml
+
+# Qdrant Access
+VEC_DB_URL=http://your-qdrant-host:6333/
+VEC_DB_API_KEY=your_qdrant_api_key_here
+
+# Unstructured Data Processing Settings
+OCR_AGENT=unstructured.partition.utils.ocr_models.tesseract_ocr.OCRAgentTesseract
+
+# Web search service
+BING_SEARCH_URL=https://api.bing.microsoft.com/v7.0/search
+BING_SUBSCRIPTION_KEY=your_bing_subscription_key_here
