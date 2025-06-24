@@ -1,4 +1,3 @@
-
 import re
 
 import logging
@@ -39,7 +38,7 @@ def _is_valid_session_id(value: str) -> bool:
 
 
 def create_checkpoint_factory(
-    table_name: str, 
+    table_name: str,
 ) -> Callable[[str, str], SnowflakeSaver]:
     """Create a factory that can retrieve checkpoints.
 
@@ -51,10 +50,11 @@ def create_checkpoint_factory(
     Returns:
         A factory that can retrieve checkpoints keyed by user ID and session ID.
     """
+
     def get_checkpoint(
-        user_id: str, 
-        session_id: str, 
-        ) -> SnowflakeSaver:
+        user_id: str,
+        session_id: str,
+    ) -> SnowflakeSaver:
         """Get a checkpoint from a user id and conversation id."""
         if not _is_valid_user_id(user_id):
             error_message = (
@@ -63,7 +63,7 @@ def create_checkpoint_factory(
                 "hyphens, and underscores."
                 "Please include a valid cookie in the request headers "
                 "called 'user-id'."
-                )
+            )
             logger.error(error_message)
             raise HTTPException(
                 status_code=400,
@@ -74,20 +74,20 @@ def create_checkpoint_factory(
                 f"Conversation session ID `{session_id}` is not in a valid format. "
                 "Session ID must only contain alphanumeric characters, "
                 "hyphens, and underscores."
-                )
+            )
             logger.error(error_message)
             raise HTTPException(
                 status_code=400,
                 detail=error_message,
             )
-        
+
         # Get any checkpoint
         checkpoint_langgraph_format = SnowflakeSaver(
-            user_id=user_id, 
-            session_id=session_id, 
-            connection_parameters=connection_parameters, 
-            table_name=table_name, 
+            user_id=user_id,
+            session_id=session_id,
+            connection_parameters=connection_parameters,
+            table_name=table_name,
         )
         return checkpoint_langgraph_format
-    
+
     return get_checkpoint

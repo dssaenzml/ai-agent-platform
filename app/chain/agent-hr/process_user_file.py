@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import AsyncIterator
@@ -21,16 +20,13 @@ logger = logging.getLogger(__name__)
 
 process_file = RunnableLambda(
     partial(_process_file, kbm=kbm, user_doc=True)
-).with_types(
-    input_type=FileProcessingRequest,
-    output_type=FileProcessingOutput
-    )
+).with_types(input_type=FileProcessingRequest, output_type=FileProcessingOutput)
 
 
 async def custom_stream(
     input: FileProcessingRequest,
     config: RunnableConfig,
-    ) -> AsyncIterator[str]:
+) -> AsyncIterator[str]:
     """A custom runnable that can stream content.
 
     Args:
@@ -43,7 +39,7 @@ async def custom_stream(
         input,
         config,
         version="v2",
-        ):
+    ):
         tags = event.get("tags", [])
         if event["event"] == "on_custom_event":
             data = event["data"]

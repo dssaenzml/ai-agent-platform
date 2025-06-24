@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import Any, Dict, Optional, Type
@@ -11,9 +10,7 @@ from langchain_core.callbacks import (
 )
 from langchain_core.tools import BaseTool, ToolException
 
-from .tool_wrapper.document_gen_tool_wrapper import (
-    DocumentGeneratorToolWrapper
-)
+from .tool_wrapper.document_gen_tool_wrapper import DocumentGeneratorToolWrapper
 
 from ..model.file_gen_model import WordDocumentGeneratorInput
 
@@ -26,8 +23,8 @@ class DocumentGeneratorTool(BaseTool):
     """
     Tool for generating documents based on a given input.
 
-    This tool uses a document generation template to create documents based 
-    on provided input. The generated document is returned as a base64 
+    This tool uses a document generation template to create documents based
+    on provided input. The generated document is returned as a base64
     encoded string.
 
     Attributes:
@@ -37,31 +34,31 @@ class DocumentGeneratorTool(BaseTool):
         return_direct: Whether the tool should return the result directly.
         tool_wrapper: The wrapper for the document generation tool.
     """
+
     name: str = "GenerateDocumentQuery"
     description: str = (
-        "useful for when you need to create a document using a document "
-        "generator"
-        )
+        "useful for when you need to create a document using a document " "generator"
+    )
     args_schema: Type[BaseModel] = WordDocumentGeneratorInput
     return_direct: bool = True
     tool_wrapper: Type[DocumentGeneratorToolWrapper] = None
     kbm: Type[KnowledgeBaseManager] = None
 
     def __init__(
-        self, 
-        tool_wrapper: Type[DocumentGeneratorToolWrapper], 
-        kbm: Type[KnowledgeBaseManager], 
-        ):
+        self,
+        tool_wrapper: Type[DocumentGeneratorToolWrapper],
+        kbm: Type[KnowledgeBaseManager],
+    ):
         super().__init__()
         self.tool_wrapper = tool_wrapper
         self.kbm = kbm
 
     def generate_document(
-        self, 
-        document_input: Dict[str, Any], 
-        user_id: str, 
-        session_id: str, 
-        ) -> Optional[str]:
+        self,
+        document_input: Dict[str, Any],
+        user_id: str,
+        session_id: str,
+    ) -> Optional[str]:
         """
         Generate a document based on the provided input.
 
@@ -75,26 +72,26 @@ class DocumentGeneratorTool(BaseTool):
             generated_document_base64 = self.tool_wrapper.run(
                 document_input=document_input
             )
-            
+
             generated_document_blob_url = self.kbm.upload_user_generated_blob(
-                base64_data=generated_document_base64, 
-                user_id=user_id, 
-                session_id=session_id, 
-                )
+                base64_data=generated_document_base64,
+                user_id=user_id,
+                session_id=session_id,
+            )
 
             logger.info("Document successfully generated.")
             return generated_document_blob_url
         except Exception as e:
             logger.error(f"Unable to generate document due to: {e}")
             raise ToolException(e)
-    
+
     def _run(
-        self, 
-        document_input: Dict[str, Any], 
-        user_id: str, 
-        session_id: str, 
-        run_manager: Optional[CallbackManagerForToolRun] = None
-        ) -> Dict[str, Any]:
+        self,
+        document_input: Dict[str, Any],
+        user_id: str,
+        session_id: str,
+        run_manager: Optional[CallbackManagerForToolRun] = None,
+    ) -> Dict[str, Any]:
         """
         Synchronously generate a document.
 
@@ -107,32 +104,32 @@ class DocumentGeneratorTool(BaseTool):
         """
         try:
             generated_document_blob_url = self.generate_document(
-                document_input=document_input, 
-                user_id=user_id, 
-                session_id=session_id, 
+                document_input=document_input,
+                user_id=user_id,
+                session_id=session_id,
             )
             return {
-                "status": "success", 
-                "generated_document_blob_url": generated_document_blob_url, 
+                "status": "success",
+                "generated_document_blob_url": generated_document_blob_url,
             }
         except ToolException as e:
             logger.error(f"Unable to generate document due to: {e}")
             return {
-                "status": "failure", 
-                "message": "Generating document failed.", 
+                "status": "failure",
+                "message": "Generating document failed.",
             }
         except Exception as e:
             logger.error(f"Unable to generate document due to: {e}")
             return {
-                "status": "failure", 
-                "message": "Generating document failed.", 
+                "status": "failure",
+                "message": "Generating document failed.",
             }
 
     async def _arun(
-        self, 
-        document_input: Dict[str, Any], 
-        user_id: str, 
-        session_id: str, 
+        self,
+        document_input: Dict[str, Any],
+        user_id: str,
+        session_id: str,
         run_manager: Optional[AsyncCallbackManagerForToolRun] = None,
     ) -> str:
         """
@@ -146,8 +143,8 @@ class DocumentGeneratorTool(BaseTool):
             A dictionary containing the base64 string of the generated document.
         """
         return self._run(
-            document_input=document_input, 
-            user_id=user_id, 
-            session_id=session_id, 
-            run_manager=run_manager.get_sync(), 
-            )
+            document_input=document_input,
+            user_id=user_id,
+            session_id=session_id,
+            run_manager=run_manager.get_sync(),
+        )

@@ -1,13 +1,9 @@
-
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 
 from ..llm_model.azure_llm import (
-    long_helper_model as llm_model, 
-    )
+    long_helper_model as llm_model,
+)
 
 # System Prompt
 system_prompt = (

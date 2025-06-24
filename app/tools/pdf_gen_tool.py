@@ -10,9 +10,7 @@ from langchain_core.callbacks import (
 )
 from langchain_core.tools import BaseTool, ToolException
 
-from .tool_wrapper.pdf_gen_tool_wrapper import (
-    PDFGeneratorToolWrapper
-)
+from .tool_wrapper.pdf_gen_tool_wrapper import PDFGeneratorToolWrapper
 
 from ..model.file_gen_model import PDFDocumentGeneratorInput
 
@@ -25,7 +23,7 @@ class PDFGeneratorTool(BaseTool):
     """
     Tool for generating PDFs based on a given input.
 
-    This tool uses an HTML input to create PDFs based on provided input. 
+    This tool uses an HTML input to create PDFs based on provided input.
     The generated PDF is returned as a base64 encoded string.
 
     Attributes:
@@ -36,31 +34,31 @@ class PDFGeneratorTool(BaseTool):
         tool_wrapper: The wrapper for the PDF generation tool.
         kbm: The knowledge base manager for handling blob storage.
     """
+
     name: str = "GeneratePDFQuery"
     description: str = (
-        "useful for when you need to create a PDF using an HTML input "
-        "generator"
-        )
+        "useful for when you need to create a PDF using an HTML input " "generator"
+    )
     args_schema: Type[BaseModel] = PDFDocumentGeneratorInput
     return_direct: bool = True
     tool_wrapper: Type[PDFGeneratorToolWrapper] = None
     kbm: Type[KnowledgeBaseManager] = None
 
     def __init__(
-        self, 
-        tool_wrapper: Type[PDFGeneratorToolWrapper], 
-        kbm: Type[KnowledgeBaseManager], 
-        ):
+        self,
+        tool_wrapper: Type[PDFGeneratorToolWrapper],
+        kbm: Type[KnowledgeBaseManager],
+    ):
         super().__init__()
         self.tool_wrapper = tool_wrapper
         self.kbm = kbm
 
     def generate_pdf(
-        self, 
-        html_input: str, 
-        user_id: str, 
-        session_id: str, 
-        ) -> Optional[str]:
+        self,
+        html_input: str,
+        user_id: str,
+        session_id: str,
+    ) -> Optional[str]:
         """
         Generate a PDF based on the provided input.
 
@@ -73,29 +71,27 @@ class PDFGeneratorTool(BaseTool):
             A URL to the generated PDF.
         """
         try:
-            generated_pdf_base64 = self.tool_wrapper.run(
-                html_input=html_input
-            )
-            
+            generated_pdf_base64 = self.tool_wrapper.run(html_input=html_input)
+
             generated_pdf_blob_url = self.kbm.upload_user_generated_blob(
-                base64_data=generated_pdf_base64, 
-                user_id=user_id, 
-                session_id=session_id, 
-                )
+                base64_data=generated_pdf_base64,
+                user_id=user_id,
+                session_id=session_id,
+            )
 
             logger.info("PDF successfully generated.")
-            return generated_pdf_blob_url 
+            return generated_pdf_blob_url
         except Exception as e:
             logger.error(f"Unable to generate PDF due to: {e}")
             raise ToolException(e)
-    
+
     def _run(
-        self, 
-        html_input: str, 
-        user_id: str, 
-        session_id: str, 
-        run_manager: Optional[CallbackManagerForToolRun] = None
-        ) -> Dict[str, Any]:
+        self,
+        html_input: str,
+        user_id: str,
+        session_id: str,
+        run_manager: Optional[CallbackManagerForToolRun] = None,
+    ) -> Dict[str, Any]:
         """
         Synchronously generate a PDF.
 
@@ -110,32 +106,26 @@ class PDFGeneratorTool(BaseTool):
         """
         try:
             generated_pdf_blob_url = self.generate_pdf(
-                html_input=html_input, 
-                user_id=user_id, 
-                session_id=session_id, 
+                html_input=html_input,
+                user_id=user_id,
+                session_id=session_id,
             )
             return {
-                "status": "success", 
-                "generated_pdf_blob_url": generated_pdf_blob_url
+                "status": "success",
+                "generated_pdf_blob_url": generated_pdf_blob_url,
             }
         except ToolException as e:
             logger.error(f"Unable to generate PDF due to: {e}")
-            return {
-                "status": "failure", 
-                "message": "Generating PDF failed."
-            }
+            return {"status": "failure", "message": "Generating PDF failed."}
         except Exception as e:
             logger.error(f"Unable to generate PDF due to: {e}")
-            return {
-                "status": "failure", 
-                "message": "Generating PDF failed."
-            }
+            return {"status": "failure", "message": "Generating PDF failed."}
 
     async def _arun(
-        self, 
-        html_input: str, 
-        user_id: str, 
-        session_id: str, 
+        self,
+        html_input: str,
+        user_id: str,
+        session_id: str,
         run_manager: Optional[AsyncCallbackManagerForToolRun] = None,
     ) -> str:
         """
@@ -151,8 +141,8 @@ class PDFGeneratorTool(BaseTool):
             A dictionary containing the base64 string of the generated PDF.
         """
         return self._run(
-            html_input=html_input, 
-            user_id=user_id, 
-            session_id=session_id, 
-            run_manager=run_manager.get_sync(), 
-            )
+            html_input=html_input,
+            user_id=user_id,
+            session_id=session_id,
+            run_manager=run_manager.get_sync(),
+        )

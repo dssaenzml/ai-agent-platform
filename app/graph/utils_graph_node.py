@@ -1,19 +1,15 @@
-
 import logging
 
 from langchain_core.runnables import RunnableConfig
 from langchain_core.callbacks.manager import adispatch_custom_event
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 
 from openai import BadRequestError
 
 from ..llm_model.azure_llm import (
-    helper_model, 
-    )
+    helper_model,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -35,10 +31,11 @@ image_system_prompt = (
     "Present the extracted information in a clear and structured format."
 )
 
+
 async def image_parsing(
-    state, 
-    enterprise_context: str, 
-    ):
+    state,
+    enterprise_context: str,
+):
     """
     Add the organization contextual information in documents
 
@@ -46,7 +43,7 @@ async def image_parsing(
         state (dict): The current graph state
 
     Returns:
-        state (dict):   New key added to state, documents, 
+        state (dict):   New key added to state, documents,
                         that contains the organization documents
     """
     logger.info("---ADDING the organization CONTEXT---")
@@ -59,45 +56,55 @@ async def image_parsing(
     if len(image_data) > 0:
         logger.info("---ADDING IMAGE CONTEXT---")
         human_input = {
-                    "query": query, 
-                    "timestamp": timestamp, 
-                    "chat_history": chat_history, 
-                    "enterprise_context": enterprise_context, 
-                    }
-        human_prompt = [{
-            "type": "text", 
-            "text": (
-                "Here is the latest query: \n\n {query} \n\n"
-                "Please analyze the provided image(s) and "
-                "extract all relevant contextual information."
-                ),},]
+            "query": query,
+            "timestamp": timestamp,
+            "chat_history": chat_history,
+            "enterprise_context": enterprise_context,
+        }
+        human_prompt = [
+            {
+                "type": "text",
+                "text": (
+                    "Here is the latest query: \n\n {query} \n\n"
+                    "Please analyze the provided image(s) and "
+                    "extract all relevant contextual information."
+                ),
+            },
+        ]
         for i in range(len(image_data)):
             human_input[f"image_type_{str(i)}"] = image_type[i]
             human_input[f"image_data_{str(i)}"] = image_data[i]
-            human_prompt.append({
-                "type": "image_url",
-                "image_url": {
-                    "url": "data:image/{image_type_" + str(i) \
-                        + "};base64,{image_data_" + str(i) + "}",
-                    },},)
+            human_prompt.append(
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "data:image/{image_type_"
+                        + str(i)
+                        + "};base64,{image_data_"
+                        + str(i)
+                        + "}",
+                    },
+                },
+            )
         # Image Prompt
-        image_prompt = ChatPromptTemplate.from_messages([
-            ("system", image_system_prompt),
-            MessagesPlaceholder("chat_history"),
-            ("human", human_prompt),
-            ])
+        image_prompt = ChatPromptTemplate.from_messages(
+            [
+                ("system", image_system_prompt),
+                MessagesPlaceholder("chat_history"),
+                ("human", human_prompt),
+            ]
+        )
         # Chain
         image_context_extractor = image_prompt | helper_model | StrOutputParser()
         try:
             image_context = await image_context_extractor.ainvoke(human_input)
         except BadRequestError:
             return {
-                "enterprise_context": enterprise_context, 
-                "image_context": 
-                    "The image context could not be extracted because the "
-                    "prompt triggered content management policy. Please "
-                    "modify your prompt and retry.", 
-                }
+                "enterprise_context": enterprise_context,
+                "image_context": "The image context could not be extracted because the "
+                "prompt triggered content management policy. Please "
+                "modify your prompt and retry.",
+            }
     else:
         logger.info("---NO INPUT IMAGE---")
         image_context = (
@@ -105,15 +112,15 @@ async def image_parsing(
             "the any other available contextual information."
         )
     return {
-        "enterprise_context": enterprise_context, 
-        "image_context": image_context, 
-        }
+        "enterprise_context": enterprise_context,
+        "image_context": image_context,
+    }
 
 
 async def final_answer(
-    state, 
+    state,
     config: RunnableConfig,
-    ):
+):
     """
     Return the final system response to the user query.
 
@@ -132,17 +139,12 @@ async def final_answer(
     final_context = [doc.dict() for doc in context]
     await adispatch_custom_event(
         "final_context",
-        {
-            "context": final_context
-        },
+        {"context": final_context},
         config=config,
     )
     for chunk in answer.content.split(" "):
         await adispatch_custom_event(
             "final_answer",
-            {
-                "answer": chunk + " "
-            },
+            {"answer": chunk + " "},
             config=config,
         )
-

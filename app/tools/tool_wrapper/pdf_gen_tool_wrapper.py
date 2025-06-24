@@ -1,4 +1,3 @@
-
 import logging
 
 import io
@@ -12,10 +11,10 @@ logger = logging.getLogger(__name__)
 
 class PDFGeneratorToolWrapper(BaseModel):
     """
-    Wrapper for generating PDFs and returning them as base64 
+    Wrapper for generating PDFs and returning them as base64
     encoded strings.
 
-    This class provides methods to generate a PDF based on 
+    This class provides methods to generate a PDF based on
     provided HTML content and return the PDF as a base64 encoded string.
 
     Usage instructions:
@@ -24,11 +23,11 @@ class PDFGeneratorToolWrapper(BaseModel):
     """
 
     def generate_pdf(
-        self, 
-        html_input: str, 
+        self,
+        html_input: str,
     ) -> str:
         """
-        Create a PDF using the provided HTML input, and return it as a 
+        Create a PDF using the provided HTML input, and return it as a
         base64 encoded string.
 
         :param html_input: A string containing the HTML content.
@@ -41,16 +40,16 @@ class PDFGeneratorToolWrapper(BaseModel):
         with io.BytesIO() as tmp_file:
             tmp_file.write(pdf)
             tmp_file.seek(0)
-            encoded_string = base64.b64encode(tmp_file.read()).decode('utf-8')
+            encoded_string = base64.b64encode(tmp_file.read()).decode("utf-8")
 
         return encoded_string
 
     def run(
-        self, 
-        html_input: str, 
+        self,
+        html_input: str,
     ) -> str:
         """
-        Run the process to generate a PDF and return it as a base64 
+        Run the process to generate a PDF and return it as a base64
         encoded string.
 
         :param html_input: A string containing the HTML content.

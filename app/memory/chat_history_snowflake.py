@@ -1,4 +1,3 @@
-
 import os
 
 import json
@@ -18,9 +17,9 @@ from snowflake.connector import connect
 logger = logging.getLogger(__name__)
 
 DEFAULT_TABLENAME = os.getenv(
-    "SNOWFLAKE_CHAT_HISTORY_TABLENAME", 
+    "SNOWFLAKE_CHAT_HISTORY_TABLENAME",
     "MESSAGES_STORE",
-    )
+)
 
 
 class SnowflakeChatMessageHistory(BaseChatMessageHistory):
@@ -43,9 +42,9 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
         session_id: str,
         message_timereceived: str,
         table_name: str = DEFAULT_TABLENAME,
-        max_len_history: int = 15, 
-        snowflake_connect_timeout: int = 30, 
-        snowflake_connect_retries: int = 2, 
+        max_len_history: int = 15,
+        snowflake_connect_timeout: int = 30,
+        snowflake_connect_retries: int = 2,
     ):
         self.connection_parameters = connection_parameters
         self.user_id = user_id
@@ -63,9 +62,9 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
         while attempt < self.snowflake_connect_retries:
             try:
                 with connect(
-                    **self.connection_parameters, 
-                    timeout=self.snowflake_connect_timeout, 
-                    ) as connection:
+                    **self.connection_parameters,
+                    timeout=self.snowflake_connect_timeout,
+                ) as connection:
                     with connection.cursor() as cursor:
                         cursor.execute(
                             "CREATE TABLE IF NOT EXISTS "
@@ -79,7 +78,7 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
                             "MESSAGE_TIMERECEIVED TIMESTAMP, "
                             "LOGGING_TIMERECEIVED TIMESTAMP "
                             ");"
-                            )
+                        )
                         cursor.execute(
                             "SELECT HISTORY "
                             "FROM ( SELECT * FROM "
@@ -106,7 +105,7 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
 
                 messages = messages_from_dict(items)
                 return messages
-            
+
             except Exception as error:
                 logger.error(error)
                 attempt += 1
@@ -118,9 +117,9 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
         while attempt < self.snowflake_connect_retries:
             try:
                 with connect(
-                    **self.connection_parameters, 
-                    timeout=self.snowflake_connect_timeout, 
-                    ) as connection:
+                    **self.connection_parameters,
+                    timeout=self.snowflake_connect_timeout,
+                ) as connection:
                     with connection.cursor() as cursor:
                         cursor.execute(
                             "CREATE TABLE IF NOT EXISTS "
@@ -134,7 +133,7 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
                             "MESSAGE_TIMERECEIVED TIMESTAMP, "
                             "LOGGING_TIMERECEIVED TIMESTAMP "
                             ");"
-                            )
+                        )
                         cursor.execute(
                             "INSERT INTO "
                             f"{self.connection_parameters['database']}."
@@ -165,9 +164,9 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
         while attempt < self.snowflake_connect_retries:
             try:
                 with connect(
-                    **self.connection_parameters, 
-                    timeout=self.snowflake_connect_timeout, 
-                    ) as connection:
+                    **self.connection_parameters,
+                    timeout=self.snowflake_connect_timeout,
+                ) as connection:
                     with connection.cursor() as cursor:
                         cursor.execute(
                             "CREATE TABLE IF NOT EXISTS "
@@ -181,7 +180,7 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
                             "MESSAGE_TIMERECEIVED TIMESTAMP, "
                             "LOGGING_TIMERECEIVED TIMESTAMP "
                             ");"
-                            )
+                        )
                         cursor.execute(
                             "DELETE FROM "
                             f"{self.connection_parameters['database']}."
@@ -190,7 +189,7 @@ class SnowflakeChatMessageHistory(BaseChatMessageHistory):
                             f"WHERE SESSION_ID = '{self.session_id}' "
                             f"AND USER_ID = '{self.user_id}'"
                             ";"
-                            )
+                        )
                 break
             except Exception as err:
                 logger.error(err)

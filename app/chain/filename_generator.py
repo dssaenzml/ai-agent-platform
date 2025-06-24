@@ -1,13 +1,9 @@
-
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 
 from ..llm_model.azure_llm import (
-    helper_model as llm_model, 
-    )
+    helper_model as llm_model,
+)
 
 # System Prompt
 system_prompt = (
@@ -68,7 +64,7 @@ prompt = ChatPromptTemplate.from_messages(
         ("system", system_prompt),
         MessagesPlaceholder("chat_history"),
         (
-            "human", 
+            "human",
             "Here is the latest query: \n\n {query} \n\n"
             "Here is the image context: \n\n {image_context} \n\n"
             "Generate a filename given the provided context.",

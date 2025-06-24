@@ -1,4 +1,3 @@
-
 from ..tool_wrapper.snowflake_sql_tool_wrapper import SnowflakeSQLQueryWrapper
 
 from ..snowflake_sql_tool import SnowflakeSQLQueryTool
@@ -6,20 +5,18 @@ from ..snowflake_sql_tool import SnowflakeSQLQueryTool
 from ...config import config
 
 connection_parameters = {
-    "account": config.SF_MILAHI_ACCOUNT, 
-    "host": f"{config.SF_MILAHI_ACCOUNT}.snowflakecomputing.com",  
-    "role": config.SF_MILAHI_ROLE, 
-    "warehouse": config.SF_MILAHI_WH, 
-    "database": config.SF_MILAHI_DB, 
-    "schema": config.SF_MILAHI_SCHEMA, 
-    "stage": config.SF_MILAHI_STAGE, 
-    "semantic_model_file": config.SF_MILAHI_SM, 
+    "account": config.SF_MILAHI_ACCOUNT,
+    "host": f"{config.SF_MILAHI_ACCOUNT}.snowflakecomputing.com",
+    "role": config.SF_MILAHI_ROLE,
+    "warehouse": config.SF_MILAHI_WH,
+    "database": config.SF_MILAHI_DB,
+    "schema": config.SF_MILAHI_SCHEMA,
+    "stage": config.SF_MILAHI_STAGE,
+    "semantic_model_file": config.SF_MILAHI_SM,
 }
 
 # Instantiate the SnowflakeSQLQueryTool
-tool_wrapper = SnowflakeSQLQueryWrapper(
-    connection_parameters=connection_parameters
-    )
+tool_wrapper = SnowflakeSQLQueryWrapper(connection_parameters=connection_parameters)
 
 # Instantiate the SnowflakeSQLQueryTool
 tool = SnowflakeSQLQueryTool(tool_wrapper=tool_wrapper)
@@ -36,7 +33,7 @@ tool = SnowflakeSQLQueryTool(tool_wrapper=tool_wrapper)
 # oauth_token = SecretStr(oauth_token)
 
 # response = tool_wrapper.run(
-#     messages=[HumanMessage(content=query)], 
-#     user = "diego.saenz@maqta.com", 
-#     oauth_token = oauth_token, 
+#     messages=[HumanMessage(content=query)],
+#     user = "diego.saenz@maqta.com",
+#     oauth_token = oauth_token,
 # )

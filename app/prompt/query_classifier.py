@@ -1,4 +1,3 @@
-
 base_system_prompt = (
     "You are a grader tasked with assessing whether a user query "
     "requires additional contextual information. You are part of "
@@ -115,11 +114,11 @@ simple_query_examples = (
 
 rag_query_examples = (
     "'describe the uploaded document' -> 'rag_query'\n"
-            "'company policies' -> 'rag_query'\n"
-        "'construction compliance' -> 'rag_query'\n"
-        "'international offices' -> 'rag_query'\n"
-        "'hr policies' -> 'rag_query'\n"
-        "'explain construction code' -> 'rag_query'\n"
+    "'company policies' -> 'rag_query'\n"
+    "'construction compliance' -> 'rag_query'\n"
+    "'international offices' -> 'rag_query'\n"
+    "'hr policies' -> 'rag_query'\n"
+    "'explain construction code' -> 'rag_query'\n"
     "'explain romania's ports' -> 'rag_query'\n"
     "'what are the construction guidelines?' -> 'rag_query'\n"
     "'what is the financial performance?' -> 'rag_query'\n"

@@ -1,4 +1,3 @@
-
 import logging
 
 from functools import partial
@@ -16,9 +15,6 @@ from ...vector_db.agent_finance import kbm
 
 logger = logging.getLogger(__name__)
 
-purge_files = RunnableLambda(
-    partial(_purge_files, kbm=kbm)
-    ).with_types(
-        input_type=FilePurgingRequest,
-        output_type=FilePurgingOutput
-        )
+purge_files = RunnableLambda(partial(_purge_files, kbm=kbm)).with_types(
+    input_type=FilePurgingRequest, output_type=FilePurgingOutput
+)

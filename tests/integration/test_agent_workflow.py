@@ -18,21 +18,17 @@ class TestAgentWorkflowIntegration:
                 "query": "Is remote work allowed?",
                 "chat_history": [],
                 "user_id": "test_user",
-                "session_id": "test_session"
+                "session_id": "test_session",
             },
             "config": {
-                "configurable": {
-                    "session_id": "test_session",
-                    "user_id": "test_user"
-                }
-            }
+                "configurable": {"session_id": "test_session", "user_id": "test_user"}
+            },
         }
-        
+
         response = client.post(
-            "/api/v1/generalagent/generalagent_rag/invoke",
-            json=request_data
+            "/api/v1/generalagent/generalagent_rag/invoke", json=request_data
         )
-        
+
         assert response.status_code == 200
         # Verify the workflow executed properly
         data = response.json()
@@ -45,20 +41,16 @@ class TestAgentWorkflowIntegration:
             "input": {
                 "file_path": "/test/document.pdf",
                 "user_id": "test_user",
-                "file_name": "document.pdf"
+                "file_name": "document.pdf",
             },
-            "config": {
-                "configurable": {
-                    "user_id": "test_user"
-                }
-            }
+            "config": {"configurable": {"user_id": "test_user"}},
         }
-        
+
         response = client.post(
             "/api/v1/generalagent/generalagent_process_kb_file/invoke",
-            json=request_data
+            json=request_data,
         )
-        
+
         # Should process the file successfully
         assert response.status_code == 200
         data = response.json()
@@ -68,7 +60,7 @@ class TestAgentWorkflowIntegration:
     def test_health_check_integration(self, client):
         """Test health check integration."""
         response = client.get("/health")
-        
+
         assert response.status_code == 200
         assert response.json() == {"status": "healthy"}
 
@@ -80,21 +72,17 @@ class TestAgentWorkflowIntegration:
                 "query": "What was the Q4 revenue?",
                 "chat_history": [],
                 "user_id": "test_user",
-                "session_id": "test_session"
+                "session_id": "test_session",
             },
             "config": {
-                "configurable": {
-                    "session_id": "test_session",
-                    "user_id": "test_user"
-                }
-            }
+                "configurable": {"session_id": "test_session", "user_id": "test_user"}
+            },
         }
-        
+
         response = client.post(
-            "/api/v1/financeagent/financeagent_rag/invoke",
-            json=request_data
+            "/api/v1/financeagent/financeagent_rag/invoke", json=request_data
         )
-        
+
         assert response.status_code == 200
         data = response.json()
         assert "answer" in data
@@ -105,24 +93,21 @@ class TestAgentWorkflowIntegration:
             "/api/v1/generalagent/generalagent_rag/invoke",
             "/api/v1/financeagent/financeagent_rag/invoke",
             "/api/v1/engineeringagent/engineeringagent_rag/invoke",
-            "/api/v1/hragent/hragent_rag/invoke"
+            "/api/v1/hragent/hragent_rag/invoke",
         ]
-        
+
         request_data = {
             "input": {
                 "query": "Test query",
                 "user_id": "test_user",
-                "session_id": "test_session"
+                "session_id": "test_session",
             },
             "config": {
-                "configurable": {
-                    "session_id": "test_session",
-                    "user_id": "test_user"
-                }
-            }
+                "configurable": {"session_id": "test_session", "user_id": "test_user"}
+            },
         }
-        
+
         for endpoint in endpoints:
             response = client.post(endpoint, json=request_data)
             # Should at least reach the endpoint (may fail due to mocking, but shouldn't 404)
-            assert response.status_code != 404 
+            assert response.status_code != 404

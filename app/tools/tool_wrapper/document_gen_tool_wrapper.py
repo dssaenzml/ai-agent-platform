@@ -1,4 +1,3 @@
-
 import logging
 from typing import Any, Callable, Dict, Optional
 from typing_extensions import Self
@@ -14,10 +13,10 @@ logger = logging.getLogger(__name__)
 
 class DocumentGeneratorToolWrapper(BaseModel):
     """
-    Wrapper for generating documents and returning them as base64 
+    Wrapper for generating documents and returning them as base64
     encoded strings.
 
-    This class provides methods to generate a document based on 
+    This class provides methods to generate a document based on
     provided content and return the document as a base64 encoded string.
 
     Usage instructions:
@@ -43,8 +42,8 @@ class DocumentGeneratorToolWrapper(BaseModel):
         return self
 
     def generate_document(
-        self, 
-        document_input: Dict[str, Any], 
+        self,
+        document_input: Dict[str, Any],
     ) -> str:
         """
         Create a document using the provided template and input, and return it as a base64 encoded string.
@@ -62,16 +61,16 @@ class DocumentGeneratorToolWrapper(BaseModel):
         with io.BytesIO() as tmp_file:
             document.save(tmp_file)
             tmp_file.seek(0)
-            encoded_string = base64.b64encode(tmp_file.read()).decode('utf-8')
+            encoded_string = base64.b64encode(tmp_file.read()).decode("utf-8")
 
         return encoded_string
 
     def run(
-        self, 
-        document_input: Dict[str, Any], 
+        self,
+        document_input: Dict[str, Any],
     ) -> str:
         """
-        Run the process to generate a document and return it as a base64 
+        Run the process to generate a document and return it as a base64
         encoded string.
 
         :param document_input: A dictionary containing the document content.

@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import Any, Dict
@@ -13,9 +12,9 @@ from snowflake.connector import connect
 logger = logging.getLogger(__name__)
 
 DEFAULT_TABLENAME = os.getenv(
-    "SNOWFLAKE_CHECKPOINTER_TABLENAME", 
+    "SNOWFLAKE_CHECKPOINTER_TABLENAME",
     "SAVER",
-    )
+)
 
 
 class SnowflakeSaver:
@@ -36,8 +35,8 @@ class SnowflakeSaver:
         user_id: str,
         session_id: str,
         table_name: str = DEFAULT_TABLENAME,
-        snowflake_connect_timeout: int = 30, 
-        snowflake_connect_retries: int = 2, 
+        snowflake_connect_timeout: int = 30,
+        snowflake_connect_retries: int = 2,
     ):
         self.connection_parameters = connection_parameters
         self.user_id = user_id
@@ -45,7 +44,7 @@ class SnowflakeSaver:
         self.table_name = table_name
         self.snowflake_connect_timeout = snowflake_connect_timeout
         self.snowflake_connect_retries = snowflake_connect_retries
-    
+
     @property
     def _load_checkpoint(self) -> Dict[str, Any]:
         """Retrieve the latest checkpoint from Snowflake.
@@ -57,9 +56,9 @@ class SnowflakeSaver:
         while attempt < self.snowflake_connect_retries:
             try:
                 with connect(
-                    **self.connection_parameters, 
-                    timeout=self.snowflake_connect_timeout, 
-                    ) as connection:
+                    **self.connection_parameters,
+                    timeout=self.snowflake_connect_timeout,
+                ) as connection:
                     with connection.cursor() as cursor:
                         cursor.execute(
                             "CREATE TABLE IF NOT EXISTS "
@@ -72,7 +71,7 @@ class SnowflakeSaver:
                             "CHECKPOINT VARIANT, "
                             "LOGGING_TIMERECEIVED TIMESTAMP "
                             ");"
-                            )
+                        )
                         cursor.execute(
                             "SELECT CHECKPOINT FROM "
                             f"{self.connection_parameters['database']}."
@@ -92,7 +91,7 @@ class SnowflakeSaver:
                     items = {}
 
                 return items
-            
+
             except Exception as error:
                 logger.error(error)
                 attempt += 1
@@ -108,9 +107,9 @@ class SnowflakeSaver:
         while attempt < self.snowflake_connect_retries:
             try:
                 with connect(
-                    **self.connection_parameters, 
-                    timeout=self.snowflake_connect_timeout, 
-                    ) as connection:
+                    **self.connection_parameters,
+                    timeout=self.snowflake_connect_timeout,
+                ) as connection:
                     with connection.cursor() as cursor:
                         cursor.execute(
                             "CREATE TABLE IF NOT EXISTS "
@@ -123,7 +122,7 @@ class SnowflakeSaver:
                             "CHECKPOINT VARIANT, "
                             "LOGGING_TIMERECEIVED TIMESTAMP "
                             ");"
-                            )
+                        )
                         cursor.execute(
                             "INSERT INTO "
                             f"{self.connection_parameters['database']}."
@@ -152,9 +151,9 @@ class SnowflakeSaver:
         while attempt < self.snowflake_connect_retries:
             try:
                 with connect(
-                    **self.connection_parameters, 
-                    timeout=self.snowflake_connect_timeout, 
-                    ) as connection:
+                    **self.connection_parameters,
+                    timeout=self.snowflake_connect_timeout,
+                ) as connection:
                     with connection.cursor() as cursor:
                         cursor.execute(
                             "CREATE TABLE IF NOT EXISTS "
@@ -167,7 +166,7 @@ class SnowflakeSaver:
                             "CHECKPOINT VARIANT, "
                             "LOGGING_TIMERECEIVED TIMESTAMP "
                             ");"
-                            )
+                        )
                         cursor.execute(
                             "DELETE FROM "
                             f"{self.connection_parameters['database']}."
@@ -176,7 +175,7 @@ class SnowflakeSaver:
                             f"WHERE SESSION_ID = '{self.session_id}' "
                             f"AND USER_ID = '{self.user_id}'"
                             ";"
-                            )
+                        )
                 break
             except Exception as err:
                 logger.error(err)

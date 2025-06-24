@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import Tuple, List, Annotated
@@ -13,40 +12,40 @@ from langchain.schema import Document
 from langgraph.graph import StateGraph, START, END
 
 from .finance_node import (
-    gather_information, 
-    retrieve, 
+    gather_information,
+    retrieve,
 )
 
 from .finance_edge import (
-    moderation_router, 
-    get_info_gathering_state, 
+    moderation_router,
+    get_info_gathering_state,
 )
 
 from ..rag_graph_node import (
-    transform_query_for_rag, 
-    grade_rag, 
+    transform_query_for_rag,
+    grade_rag,
 )
 
 from ..web_search_graph_node import (
-    transform_query_for_web_search, 
-    web_search, 
-    grade_web, 
+    transform_query_for_web_search,
+    web_search,
+    grade_web,
 )
 
 from ..response_graph_node import (
-    request_refined_query, 
-    generate_simple, 
-    generate, 
+    request_refined_query,
+    generate_simple,
+    generate,
 )
 
 from ..utils_graph_node import (
-    image_parsing, 
-    final_answer, 
+    image_parsing,
+    final_answer,
 )
 
 from ..utils_graph_edge import (
-    decide_to_search_web, 
-    decide_how_to_respond, 
+    decide_to_search_web,
+    decide_how_to_respond,
 )
 
 from ..utils import get_update
@@ -70,7 +69,7 @@ class GraphState(TypedDict):
     image_type_data: Tuple[List[str]]
     chat_history: List[str]
     web_search: bool
-    
+
     # Attributes populated within the graph
     enterprise_context: str
     image_context: str
@@ -88,6 +87,7 @@ class InputState(TypedDict):
     """
     Represents the input state of the graph.
     """
+
     query: str
     username: str
     timestamp: str
@@ -100,6 +100,7 @@ class OutputState(TypedDict):
     """
     Represents the output state of the graph.
     """
+
     context: List[Document]
     answer: str
     web_search: bool
@@ -107,35 +108,27 @@ class OutputState(TypedDict):
 
 ## Graph flow
 workflow = StateGraph(
-    GraphState, 
-    input=InputState, 
+    GraphState,
+    input=InputState,
     output=OutputState,
 )
 
 # Define the nodes
 workflow.add_node(
-    "image_parsing", 
-    partial(image_parsing, enterprise_context=enterprise_context), 
-    )  # add enterprise and image context info
+    "image_parsing",
+    partial(image_parsing, enterprise_context=enterprise_context),
+)  # add enterprise and image context info
 workflow.add_node(
-    "request_refined_query", 
-    request_refined_query
-    )  # request refined query
-workflow.add_node(
-    "gather_information", 
-    gather_information
-    )  # collect required data
+    "request_refined_query", request_refined_query
+)  # request refined query
+workflow.add_node("gather_information", gather_information)  # collect required data
 workflow.add_node("generate_simple", generate_simple)  # generate
-workflow.add_node(
-    "transform_query_for_rag", 
-    transform_query_for_rag
-    )  # transform query
+workflow.add_node("transform_query_for_rag", transform_query_for_rag)  # transform query
 workflow.add_node("retrieve", partial(retrieve, kbm=kbm))  # retrieve
 workflow.add_node("grade_rag_docs", grade_rag)  # grade documents
 workflow.add_node(
-    "transform_query_for_web_search", 
-    transform_query_for_web_search
-    )  # transform query
+    "transform_query_for_web_search", transform_query_for_web_search
+)  # transform query
 workflow.add_node("web_search_node", web_search)  # web search
 workflow.add_node("grade_web_docs", grade_web)  # grade documents
 workflow.add_node("generate", generate)  # generate
@@ -147,18 +140,18 @@ workflow.add_conditional_edges(
     "image_parsing",
     moderation_router,
     {
-        "need refined query": "request_refined_query", 
-        "no moderation required": "gather_information", 
+        "need refined query": "request_refined_query",
+        "no moderation required": "gather_information",
     },
 )
 workflow.add_conditional_edges(
     "gather_information",
     get_info_gathering_state,
     {
-        "request data": "final_answer", 
-        "retrieval augmented": "transform_query_for_rag", 
-        "web search retrieval": "transform_query_for_web_search", 
-        "generate simple answer": "generate_simple", 
+        "request data": "final_answer",
+        "retrieval augmented": "transform_query_for_rag",
+        "web search retrieval": "transform_query_for_web_search",
+        "generate simple answer": "generate_simple",
     },
 )
 workflow.add_edge("transform_query_for_rag", "retrieve")
@@ -178,10 +171,10 @@ workflow.add_conditional_edges(
     "generate",
     decide_how_to_respond,
     {
-        "need refined query": "request_refined_query", 
-        "not supported": "generate", 
-        "useful": "final_answer", 
-        "not useful": "generate", 
+        "need refined query": "request_refined_query",
+        "not supported": "generate",
+        "useful": "final_answer",
+        "not useful": "generate",
     },
 )
 workflow.add_edge("request_refined_query", END)

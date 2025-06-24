@@ -1,14 +1,11 @@
-
 import logging
 
 from .utils import (
-    generate_public_docs_filter, 
-    generate_individual_docs_filter, 
-    )
+    generate_public_docs_filter,
+    generate_individual_docs_filter,
+)
 
-from ..chain.query_rag_rewriter import (
-    query_rewriter
-    )
+from ..chain.query_rag_rewriter import query_rewriter
 
 from ..chain.retrieval_grader import retrieval_grader
 
@@ -36,20 +33,22 @@ async def transform_query_for_rag(state):
     image_context = state["image_context"]
 
     # Re-write query
-    better_query = await query_rewriter.ainvoke({
-        "query": query, 
-        "timestamp": timestamp, 
-        "chat_history": chat_history, 
-        "enterprise_context": enterprise_context, 
-        "image_context": image_context, 
-        })
+    better_query = await query_rewriter.ainvoke(
+        {
+            "query": query,
+            "timestamp": timestamp,
+            "chat_history": chat_history,
+            "enterprise_context": enterprise_context,
+            "image_context": image_context,
+        }
+    )
     return {"rag_query": better_query}
 
 
 async def doc_retrieve(
-    state, 
-    kbm: KnowledgeBaseManager, 
-    ):
+    state,
+    kbm: KnowledgeBaseManager,
+):
     """
     Retrieve document
 
@@ -57,7 +56,7 @@ async def doc_retrieve(
         state (dict): The current graph state
 
     Returns:
-        state (dict):   Update key to state, context, 
+        state (dict):   Update key to state, context,
                         that contains retrieved documents
     """
     logger.info("---RETRIEVE DOCUMENT---")
@@ -66,13 +65,13 @@ async def doc_retrieve(
 
     # Retrieval
     results = await kbm.vectorstore.asimilarity_search_with_relevance_scores(
-        query=query, 
-        k=kbm.search_kwargs["k"] * 2, 
-        filter=generate_individual_docs_filter(doc_ids), 
-        )
+        query=query,
+        k=kbm.search_kwargs["k"] * 2,
+        filter=generate_individual_docs_filter(doc_ids),
+    )
     documents = []
     unique_page_contents = set()
-    
+
     for r in results:
         doc = r[0]
         similarity_score = r[1]
@@ -80,7 +79,7 @@ async def doc_retrieve(
             if "original_page_content" in doc.metadata.keys():
                 doc.page_content = doc.metadata["original_page_content"]
                 doc.metadata.pop("original_page_content")
-        
+
             if doc.page_content not in unique_page_contents:
                 documents.append(doc)
                 unique_page_contents.add(doc.page_content)
@@ -90,9 +89,9 @@ async def doc_retrieve(
 
 
 async def retrieve(
-    state, 
-    kbm: KnowledgeBaseManager, 
-    ):
+    state,
+    kbm: KnowledgeBaseManager,
+):
     """
     Retrieve public documents only
 
@@ -100,7 +99,7 @@ async def retrieve(
         state (dict): The current graph state
 
     Returns:
-        state (dict):   New key added to state, documents, 
+        state (dict):   New key added to state, documents,
                         that contains retrieved documents
     """
     logger.info("---RETRIEVE---")
@@ -108,13 +107,13 @@ async def retrieve(
 
     # Retrieval
     results = await kbm.vectorstore.asimilarity_search_with_relevance_scores(
-        query=query, 
-        k=kbm.search_kwargs["k"], 
-        filter=generate_public_docs_filter(), 
-        )
+        query=query,
+        k=kbm.search_kwargs["k"],
+        filter=generate_public_docs_filter(),
+    )
     documents = []
     unique_page_contents = set()
-    
+
     for r in results:
         doc = r[0]
         similarity_score = r[1]
@@ -122,7 +121,7 @@ async def retrieve(
             if "original_page_content" in doc.metadata.keys():
                 doc.page_content = doc.metadata["original_page_content"]
                 doc.metadata.pop("original_page_content")
-        
+
             if doc.page_content not in unique_page_contents:
                 documents.append(doc)
                 unique_page_contents.add(doc.page_content)
@@ -148,12 +147,14 @@ async def grade_rag(state):
 
     # Score each doc
     filtered_context = []
-    
+
     for d in context:
-        score = await retrieval_grader.ainvoke({
-                "query": query, 
-                "document": d.page_content, 
-                })
+        score = await retrieval_grader.ainvoke(
+            {
+                "query": query,
+                "document": d.page_content,
+            }
+        )
         grade = score.binary_score
         if grade == "yes":
             logger.info("---GRADE: DOCUMENT RELEVANT---")
@@ -161,5 +162,5 @@ async def grade_rag(state):
         else:
             logger.info("---GRADE: DOCUMENT NOT RELEVANT---")
             continue
-    
+
     return {"context": filtered_context}

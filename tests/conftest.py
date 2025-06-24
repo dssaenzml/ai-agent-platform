@@ -19,29 +19,36 @@ os.environ["VEC_DB_API_KEY"] = "test_qdrant_key"
 # Create a simple test app instead of importing the full app
 test_app = FastAPI()
 
+
 @test_app.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
 
 @test_app.post("/api/v1/generalagent/generalagent_rag/invoke")
 async def mock_general_agent_invoke(request: dict):
     return {"answer": "Mock response", "context": [], "session_id": "test"}
 
+
 @test_app.post("/api/v1/generalagent/generalagent_rag/stream")
 async def mock_general_agent_stream(request: dict):
     return "Mock streaming response"
+
 
 @test_app.post("/api/v1/generalagent/generalagent_process_kb_file/invoke")
 async def mock_general_agent_file(request: dict):
     return {"result": "Mock file processed", "file_name": "test.pdf"}
 
+
 @test_app.post("/api/v1/financeagent/financeagent_rag/invoke")
 async def mock_finance_agent_invoke(request: dict):
     return {"answer": "Mock finance response", "context": [], "session_id": "test"}
 
+
 @test_app.post("/api/v1/engineeringagent/engineeringagent_rag/invoke")
 async def mock_engineering_agent_invoke(request: dict):
     return {"answer": "Mock engineering response", "context": [], "session_id": "test"}
+
 
 @test_app.post("/api/v1/hragent/hragent_rag/invoke")
 async def mock_hr_agent_invoke(request: dict):
@@ -66,7 +73,7 @@ def client():
 @pytest.fixture
 def mock_config():
     """Mock configuration for testing."""
-    with patch('app.config.config') as mock_cfg:
+    with patch("app.config.config") as mock_cfg:
         mock_cfg.azure_openai_llm_api_key = "test_api_key"
         mock_cfg.azure_openai_llm_endpoint = "https://test.openai.azure.com/"
         mock_cfg.vec_db_url = "http://test-qdrant:6333"
@@ -104,14 +111,14 @@ def sample_chat_input():
             "query": "What is the AI Agent Platform?",
             "chat_history": [],
             "user_id": "test_user_123",
-            "session_id": "test_session_456"
+            "session_id": "test_session_456",
         },
         "config": {
             "configurable": {
                 "session_id": "test_session_456",
-                "user_id": "test_user_123"
+                "user_id": "test_user_123",
             }
-        }
+        },
     }
 
 
@@ -122,13 +129,9 @@ def sample_file_input():
         "input": {
             "file_path": "test_document.pdf",
             "user_id": "test_user_123",
-            "file_name": "test_document.pdf"
+            "file_name": "test_document.pdf",
         },
-        "config": {
-            "configurable": {
-                "user_id": "test_user_123"
-            }
-        }
+        "config": {"configurable": {"user_id": "test_user_123"}},
     }
 
 
@@ -140,4 +143,4 @@ def mock_vector_store():
         Mock(page_content="Test content", metadata={"source": "test.pdf"})
     ]
     mock.add_documents.return_value = ["test_id_1"]
-    return mock 
+    return mock

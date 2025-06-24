@@ -1,4 +1,3 @@
-
 from typing import Any, Dict
 
 from docx import Document
@@ -12,15 +11,16 @@ from ...vector_db.agent_general import kbm
 
 # SoW template function
 def consultancy_services_sow_document_template(
-    document: Document, 
-    document_input: Dict[str, Any], 
-    ) -> None:
+    document: Document,
+    document_input: Dict[str, Any],
+) -> None:
     """
     SoW template function to generate a document.
 
     :param document: The Document object to be populated.
     :param document_input: A dictionary containing the document content.
     """
+
     # Function to delete a paragraph
     def delete_paragraph(paragraph):
         p = paragraph._element
@@ -29,13 +29,20 @@ def consultancy_services_sow_document_template(
 
     # List of paragraph indices to delete
     paragraph_indices_to_delete = [
-        32, 33, 34, 35, 40, 41, 42, 43, 
-        ]
+        32,
+        33,
+        34,
+        35,
+        40,
+        41,
+        42,
+        43,
+    ]
 
     # Delete the specified paragraphs
     for index in sorted(paragraph_indices_to_delete, reverse=True):
         delete_paragraph(document.paragraphs[index])
-    
+
     # 1.0	Preamble
     document.paragraphs[12].text = document_input.get("preamble", "")
 
@@ -45,36 +52,36 @@ def consultancy_services_sow_document_template(
 
     ## 2.2	Description of the Services
     document.paragraphs[17].text = document_input.get(
-        "description_of_services", 
-        "", 
-        )
+        "description_of_services",
+        "",
+    )
 
     ## 2.3	Codes & Standards
     document.paragraphs[19].text = document_input.get("codes_standards", "")
 
     ## 2.4	Drawings & Specifications
     document.paragraphs[21].text = document_input.get(
-        "drawings_specifications", 
-        "", 
-        )
+        "drawings_specifications",
+        "",
+    )
 
     ## 2.5	Review Periods, Meetings and Reporting Requirements
     document.paragraphs[23].text = document_input.get(
-        "review_meetings_reporting", 
-        "", 
-        )
+        "review_meetings_reporting",
+        "",
+    )
 
     ## 2.6	Training Requirements
     document.paragraphs[25].text = document_input.get(
-        "training_requirements", 
-        "", 
-        )
+        "training_requirements",
+        "",
+    )
 
     ## 2.7	Interface Requirements
     document.paragraphs[27].text = document_input.get(
-        "interface_requirements", 
-        "", 
-        )
+        "interface_requirements",
+        "",
+    )
 
     ## 2.8	Deliverables
     document.paragraphs[29].text = document_input.get("deliverables", "")
@@ -87,19 +94,19 @@ def consultancy_services_sow_document_template(
 
     # 5.0	Facilities provided by the Employer
     document.paragraphs[35].text = document_input.get(
-        "facilities_by_employer", 
-        "", 
-        )
+        "facilities_by_employer",
+        "",
+    )
 
 
 consultancy_services_sow_tool_wrapper = DocumentGeneratorToolWrapper(
     document_template=consultancy_services_sow_document_template
-    )
+)
 
 consultancy_services_sow_tool = DocumentGeneratorTool(
-    tool_wrapper=consultancy_services_sow_tool_wrapper, 
-    kbm=kbm, 
-    )
+    tool_wrapper=consultancy_services_sow_tool_wrapper,
+    kbm=kbm,
+)
 
 # from docx import Document
 

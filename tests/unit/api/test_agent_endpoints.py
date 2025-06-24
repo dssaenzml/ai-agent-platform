@@ -13,10 +13,9 @@ class TestGeneralAgentEndpoints:
     def test_general_agent_rag_invoke(self, client, sample_chat_input):
         """Test General Agent RAG invoke endpoint."""
         response = client.post(
-            "/api/v1/generalagent/generalagent_rag/invoke",
-            json=sample_chat_input
+            "/api/v1/generalagent/generalagent_rag/invoke", json=sample_chat_input
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert "answer" in data
@@ -25,21 +24,19 @@ class TestGeneralAgentEndpoints:
     def test_general_agent_rag_stream(self, client, sample_chat_input):
         """Test General Agent RAG stream endpoint."""
         response = client.post(
-            "/api/v1/generalagent/generalagent_rag/stream",
-            json=sample_chat_input
+            "/api/v1/generalagent/generalagent_rag/stream", json=sample_chat_input
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
 
     def test_general_agent_invalid_input(self, client):
         """Test General Agent with invalid input."""
         invalid_input = {"invalid": "data"}
-        
+
         response = client.post(
-            "/api/v1/generalagent/generalagent_rag/invoke",
-            json=invalid_input
+            "/api/v1/generalagent/generalagent_rag/invoke", json=invalid_input
         )
-        
+
         # Mock endpoint accepts any input and returns 200
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -49,9 +46,9 @@ class TestGeneralAgentEndpoints:
         """Test General Agent file processing endpoint."""
         response = client.post(
             "/api/v1/generalagent/generalagent_process_kb_file/invoke",
-            json=sample_file_input
+            json=sample_file_input,
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert "result" in data
@@ -64,10 +61,9 @@ class TestFinanceAgentEndpoints:
     def test_finance_agent_rag_invoke(self, client, sample_chat_input):
         """Test Finance Agent RAG invoke endpoint."""
         response = client.post(
-            "/api/v1/financeagent/financeagent_rag/invoke",
-            json=sample_chat_input
+            "/api/v1/financeagent/financeagent_rag/invoke", json=sample_chat_input
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert "answer" in data
@@ -77,11 +73,10 @@ class TestFinanceAgentEndpoints:
         """Test Finance Agent error handling with invalid data."""
         # Test with invalid JSON structure
         invalid_data = {"completely": "wrong", "structure": True}
-        
+
         response = client.post(
-            "/api/v1/financeagent/financeagent_rag/invoke",
-            json=invalid_data
+            "/api/v1/financeagent/financeagent_rag/invoke", json=invalid_data
         )
-        
+
         # Should handle invalid input gracefully (mock endpoint will still respond)
-        assert response.status_code == status.HTTP_200_OK 
+        assert response.status_code == status.HTTP_200_OK

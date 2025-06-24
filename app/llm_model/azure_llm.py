@@ -1,4 +1,3 @@
-
 from langchain_openai import AzureChatOpenAI
 
 from ..config import config
@@ -141,12 +140,12 @@ AUDIO_LLM_API_KEY = config.AZURE_OPENAI_AUDIO_LLM_API_KEY
 #     max_retries=2,
 #     model_kwargs={
 #         "modalities": [
-#             "text", 
-#             "audio", 
+#             "text",
+#             "audio",
 #             ],  # We’re telling the model to handle both text and audio
 #         "audio": {
-#             "voice": "alloy", 
-#             "format": "wav", 
+#             "voice": "alloy",
+#             "format": "wav",
 #             },  # Configure voice and output format
 #     },
 # )

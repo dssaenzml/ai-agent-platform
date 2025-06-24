@@ -1,4 +1,3 @@
-
 from ..base_enterprise import base_enterprise_context
 
 # Contextual Information

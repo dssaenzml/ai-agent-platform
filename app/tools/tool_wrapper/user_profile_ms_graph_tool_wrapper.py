@@ -1,4 +1,3 @@
-
 import logging
 
 from pydantic import BaseModel, SecretStr
@@ -12,7 +11,7 @@ class UserProfileMSGraphToolWrapper(BaseModel):
     """
     Wrapper for retrieving user profile information from Microsoft Graph API.
 
-    This class provides a method to retrieve user profile information 
+    This class provides a method to retrieve user profile information
     using an OAuth token.
 
     Usage instructions:
@@ -30,9 +29,9 @@ class UserProfileMSGraphToolWrapper(BaseModel):
         Returns:
             A dictionary containing the user profile information.
         """
-        graph_api_url = 'https://graph.microsoft.com/v1.0/me'
+        graph_api_url = "https://graph.microsoft.com/v1.0/me"
         headers = {
-            'Authorization': 'Bearer ' + oauth_token.get_secret_value(),
+            "Authorization": "Bearer " + oauth_token.get_secret_value(),
         }
         response = requests.get(graph_api_url, headers=headers)
         response.raise_for_status()

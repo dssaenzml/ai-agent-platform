@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, Field
 
 
@@ -7,8 +6,7 @@ class SimpleRAGWebGradeQuery(BaseModel):
     """Score to assess the type of query."""
 
     query_type: str = Field(
-        description=
-        "Type of query: 'simple_query', 'rag_query', or 'web_search_query'"
+        description="Type of query: 'simple_query', 'rag_query', or 'web_search_query'"
     )
 
 
@@ -18,8 +16,8 @@ class SimpleRAGWebImgGradeQuery(BaseModel):
 
     query_type: str = Field(
         description=(
-        "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
-        "or 'img_gen_query'"
+            "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
+            "or 'img_gen_query'"
         )
     )
 
@@ -30,8 +28,8 @@ class SimpleRAGWebImgPDFGradeQuery(BaseModel):
 
     query_type: str = Field(
         description=(
-        "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
-        "'img_gen_query', or 'pdf_gen_query'"
+            "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
+            "'img_gen_query', or 'pdf_gen_query'"
         )
     )
 
@@ -42,11 +40,11 @@ class SimpleRAGWebSoWGradeQuery(BaseModel):
 
     query_type: str = Field(
         description=(
-        "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
-        "or 'sow_doc_query'"
+            "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
+            "or 'sow_doc_query'"
         )
     )
-    
+
 
 # Data model
 class SimpleRAGWebSQLGradeQuery(BaseModel):
@@ -54,8 +52,8 @@ class SimpleRAGWebSQLGradeQuery(BaseModel):
 
     query_type: str = Field(
         description=(
-        "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
-        "or 'sql_query'"
+            "Type of query: 'simple_query', 'rag_query', 'web_search_query', "
+            "or 'sql_query'"
         )
     )
 
@@ -64,10 +62,7 @@ class SimpleRAGWebSQLGradeQuery(BaseModel):
 class SimpleSQLGradeQuery(BaseModel):
     """Score to assess the type of query."""
 
-    query_type: str = Field(
-        description=
-        "Type of query: 'simple_query' or 'sql_query'"
-    )
+    query_type: str = Field(description="Type of query: 'simple_query' or 'sql_query'")
 
 
 # Data model
@@ -75,8 +70,7 @@ class GradeModeration(BaseModel):
     """Binary score to assess question requires moderation."""
 
     binary_score: str = Field(
-        description=
-        "Question needs to be moderated, 'yes' or 'no'"
+        description="Question needs to be moderated, 'yes' or 'no'"
     )
 
 

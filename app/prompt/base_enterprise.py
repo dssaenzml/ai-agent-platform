@@ -1,4 +1,3 @@
-
 base_enterprise_context = (
     "Organization context and guidelines:\n\n"
     "This AI Agent Platform serves as a demonstration of enterprise-grade "

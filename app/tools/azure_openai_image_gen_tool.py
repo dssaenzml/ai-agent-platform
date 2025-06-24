@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import Any, Dict, Optional, Type
@@ -13,9 +12,7 @@ from langchain_core.tools import BaseTool, ToolException
 
 from openai import BadRequestError
 
-from .tool_wrapper.azure_openai_image_gen_api_wrapper import (
-    AzureDallEAPIWrapper
-)
+from .tool_wrapper.azure_openai_image_gen_api_wrapper import AzureDallEAPIWrapper
 
 from ..model.file_gen_model import ImageGenerationInput
 
@@ -28,7 +25,7 @@ class AzureOpenAIImageGenerationTool(BaseTool):
     """
     Tool for generating images based on a given query.
 
-    This tool uses the AzureOpenAI API to generate images based on a 
+    This tool uses the AzureOpenAI API to generate images based on a
     provided query. The generated image is provided through a URL.
 
     Attributes:
@@ -37,31 +34,32 @@ class AzureOpenAIImageGenerationTool(BaseTool):
         args_schema: The schema for the input arguments.
         return_direct: Tool should return the result directly.
     """
+
     name: str = "ImageGenerationQuery"
     description: str = (
         "useful for when you need to generate images based on a given "
         "prompt, style, quality and size"
-        )
+    )
     args_schema: Type[BaseModel] = ImageGenerationInput
     return_direct: bool = True
     api_wrapper: Type[AzureDallEAPIWrapper] = None
     kbm: Type[KnowledgeBaseManager] = None
 
     def __init__(
-        self, 
-        api_wrapper: Type[AzureDallEAPIWrapper], 
-        kbm: Type[KnowledgeBaseManager], 
-        ):
+        self,
+        api_wrapper: Type[AzureDallEAPIWrapper],
+        kbm: Type[KnowledgeBaseManager],
+    ):
         super().__init__()
         self.api_wrapper = api_wrapper
         self.kbm = kbm
 
     def generate_image(
-        self, 
-        query: str, 
-        user_id: str, 
-        session_id: str, 
-        ) -> Optional[str]:
+        self,
+        query: str,
+        user_id: str,
+        session_id: str,
+    ) -> Optional[str]:
         """
         Generates an image based on the provided query.
 
@@ -74,15 +72,13 @@ class AzureOpenAIImageGenerationTool(BaseTool):
             A URL pointing to the generated image.
         """
         try:
-            generation_message, generated_image_base64 = self.api_wrapper.run(
-                query
-                )
-            
+            generation_message, generated_image_base64 = self.api_wrapper.run(query)
+
             image_blob_url = self.kbm.upload_user_image_blob(
-                base64_data=generated_image_base64, 
-                user_id=user_id, 
-                session_id=session_id, 
-                )
+                base64_data=generated_image_base64,
+                user_id=user_id,
+                session_id=session_id,
+            )
 
             logger.info("Image generated successfully.")
             return generation_message, image_blob_url
@@ -92,14 +88,14 @@ class AzureOpenAIImageGenerationTool(BaseTool):
         except Exception as e:
             logger.error(f"Unable to generate image due to: {e}")
             raise ToolException(e)
-    
+
     def _run(
-        self, 
-        query: str, 
-        user_id: str, 
-        session_id: str, 
-        run_manager: Optional[CallbackManagerForToolRun] = None
-        ) -> Dict[str, Any]:
+        self,
+        query: str,
+        user_id: str,
+        session_id: str,
+        run_manager: Optional[CallbackManagerForToolRun] = None,
+    ) -> Dict[str, Any]:
         """
         Synchronously generates an image.
 
@@ -113,42 +109,41 @@ class AzureOpenAIImageGenerationTool(BaseTool):
         """
         try:
             generation_message, image_blob_url = self.generate_image(
-                query=query, 
-                user_id=user_id, 
-                session_id=session_id, 
+                query=query,
+                user_id=user_id,
+                session_id=session_id,
             )
             return {
-                "status": "success", 
-                "image_generation_message": generation_message, 
-                "image_blob_url": image_blob_url, 
-                }
+                "status": "success",
+                "image_generation_message": generation_message,
+                "image_blob_url": image_blob_url,
+            }
         except BadRequestError as e:
             logger.error(f"Unable to generate image due to: {e}")
             return {
-                "status": "failure", 
-                "message": 
-                    "Your request was rejected as a result of our "
-                    "safety system. Your prompt may contain text that is "
-                    "not allowed by our safety system.", 
-                }
+                "status": "failure",
+                "message": "Your request was rejected as a result of our "
+                "safety system. Your prompt may contain text that is "
+                "not allowed by our safety system.",
+            }
         except ToolException as e:
             logger.error(f"Unable to generate image due to: {e}")
             return {
-                "status": "failure", 
-                "message": "Image generation failed.", 
-                }
+                "status": "failure",
+                "message": "Image generation failed.",
+            }
         except Exception as e:
             logger.error(f"Unable to generate image due to: {e}")
             return {
-                "status": "failure", 
-                "message": "Image generation failed.", 
-                }
+                "status": "failure",
+                "message": "Image generation failed.",
+            }
 
     async def _arun(
         self,
-        query: str, 
-        user_id: str, 
-        session_id: str, 
+        query: str,
+        user_id: str,
+        session_id: str,
         run_manager: Optional[AsyncCallbackManagerForToolRun] = None,
     ) -> str:
         """
@@ -164,8 +159,8 @@ class AzureOpenAIImageGenerationTool(BaseTool):
             A dictionary containing the URL pointing to the generated image.
         """
         return self._run(
-            query=query, 
-            user_id=user_id, 
-            session_id=session_id, 
-            run_manager=run_manager.get_sync(), 
-            )
+            query=query,
+            user_id=user_id,
+            session_id=session_id,
+            run_manager=run_manager.get_sync(),
+        )

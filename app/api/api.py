@@ -20,11 +20,11 @@ from .handlers.health import router as health
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
         logging.StreamHandler(),  # Log to console
-        logging.FileHandler('server.log')  # Log to file
-    ]
+        logging.FileHandler("server.log"),  # Log to file
+    ],
 )
 
 logger = logging.getLogger(__name__)

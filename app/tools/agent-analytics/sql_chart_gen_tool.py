@@ -1,11 +1,6 @@
+from ..tool_wrapper.sql_chart_gen_tool_wrapper import SQLChartGeneratorToolWrapper
 
-from ..tool_wrapper.sql_chart_gen_tool_wrapper import (
-    SQLChartGeneratorToolWrapper
-)
-
-from ..sql_chart_gen_tool import (
-    SQLChartGeneratorTool
-    )
+from ..sql_chart_gen_tool import SQLChartGeneratorTool
 
 from ...vector_db.agent_analytics import kbm
 
@@ -13,6 +8,6 @@ from ...vector_db.agent_analytics import kbm
 tool_wrapper = SQLChartGeneratorToolWrapper()
 
 tool = SQLChartGeneratorTool(
-    tool_wrapper=tool_wrapper, 
-    kbm=kbm, 
-    )
+    tool_wrapper=tool_wrapper,
+    kbm=kbm,
+)

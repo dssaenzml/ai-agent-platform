@@ -1,4 +1,3 @@
-
 refined_response_system_prompt = (
     "You are a helpful chatbot assistant part of an LLM application that "
     "is requesting for a more detailed / refined query. The reason could "
@@ -115,7 +114,7 @@ context_system_prompt = (
     "'AD Ports Group Information Security Policies', 'page_number': 45, "
     "..., 'context_type': 'rag_result'}}, page_content=\"On the file titled "
     "as: 'AD Ports Group Information Security Policies', page 45, the "
-    "following HTML Table was found:...\")\n"
+    'following HTML Table was found:...")\n'
     "\t\tthen, you reference them like this: (<em>AD Ports Group "
     "Information Security Policies, p. 40</em>) (<em>AD Ports Group "
     "Information Security Policies, p. 45</em>)\n\n"
@@ -137,7 +136,7 @@ context_system_prompt = (
     "..., 'context_type': 'web_search_result'.}}, "
     "page_content=\"On the website titled: 'Camilla, the New Queen of "
     "UK' (URL 'https://www.abcnew.com/queen_uk'), the following "
-    "information was found:...\")\n"
+    'information was found:...")\n'
     "\t\tthen you reference them like this: <a "
     "href='https://www.nbcchicago.com/news' "
     "title='Who is the New Queen of England?' target='_blank'>[1]</a> <a "

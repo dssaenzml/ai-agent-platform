@@ -1,4 +1,3 @@
-
 from .utils import KnowledgeBaseManager
 
 from ..config import config

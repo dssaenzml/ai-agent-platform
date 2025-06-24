@@ -4,13 +4,13 @@ from langchain_core.prompts import (
 )
 
 from ...llm_model.azure_llm import (
-    helper_model, 
-    long_helper_model, 
-    )
+    helper_model,
+    long_helper_model,
+)
 
 from ...model.agent_procurement.bot_model import (
-    SoWType, 
-    ConsultancyServicesSoWDetails, 
+    SoWType,
+    ConsultancyServicesSoWDetails,
 )
 
 ## SoW type gatherer
@@ -52,11 +52,11 @@ prompt = ChatPromptTemplate.from_messages(
         ("system", system_prompt),
         MessagesPlaceholder("chat_history"),
         (
-            "human", 
+            "human",
             "Here is the latest human query: \n\n {query} \n\n"
             "Here is the image context: \n\n {image_context} \n\n"
             "Gather the necessary details.",
-            ),
+        ),
     ]
 )
 
@@ -131,11 +131,11 @@ prompt = ChatPromptTemplate.from_messages(
         ("system", system_prompt),
         MessagesPlaceholder("chat_history"),
         (
-            "human", 
+            "human",
             "Here is the latest human query: \n\n {query} \n\n"
             "Here is the image context: \n\n {image_context} \n\n"
             "Gather the necessary details.",
-            ),
+        ),
     ]
 )
 
@@ -167,10 +167,10 @@ consultancy_services_sow_details_gatherer = prompt | llm_with_tool
 # # query = "hi"
 # response = gatherer.invoke({
 #         "query": query,
-#         "timestamp": "16th Jan 2025 15:29PM", 
-#         "chat_history": [], 
-#         "enterprise_context": enterprise_context, 
-#         "image_context": image_context, 
+#         "timestamp": "16th Jan 2025 15:29PM",
+#         "chat_history": [],
+#         "enterprise_context": enterprise_context,
+#         "image_context": image_context,
 #         })
 
 

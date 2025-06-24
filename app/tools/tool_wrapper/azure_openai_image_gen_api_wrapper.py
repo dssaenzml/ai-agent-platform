@@ -1,4 +1,3 @@
-
 import logging
 from typing import Any, Dict, Mapping, Optional, Tuple, Union
 
@@ -41,8 +40,8 @@ class AzureDallEAPIWrapper(BaseModel):
     )
     """Automatically inferred from env var `AZURE_OPENAI_API_KEY` if not provided."""
     az_openai_endpoint: Optional[str] = Field(
-        alias="base_url", 
-        default_factory=from_env("AZURE_OPENAI_API_BASE", default=None)
+        alias="base_url",
+        default_factory=from_env("AZURE_OPENAI_API_BASE", default=None),
     )
     """Base URL path for API requests, leave blank if not using a proxy or service 
         emulator."""
@@ -75,35 +74,29 @@ class AzureDallEAPIWrapper(BaseModel):
     n: int = 1
     """Number of images to generate"""
     size: str = Field(
-        "1024x1024", 
+        "1024x1024",
         description=(
             "The pixel size of the image, one of '1024x1024', '1792x1024', "
             "or '1024x1792'."
-            )
+        ),
     )
     """Size of image to generate"""
     separator: str = "\n"
     """Separator to use when multiple URLs are returned."""
     quality: Optional[str] = Field(
-        "standard", 
-        description=(
-            "The quality of the image, either 'hd' or 'standard'."
-            )
+        "standard", description=("The quality of the image, either 'hd' or 'standard'.")
     )
     """Quality of the image that will be generated"""
     style: Optional[str] = Field(
-        "vivid", 
-        description=(
-            "The style of the image, either 'natural' or 'vivid'."
-            )
+        "vivid", description=("The style of the image, either 'natural' or 'vivid'.")
     )
     """Style of the image that will be generated"""
     response_format: Optional[str] = Field(
-        "b64_json", 
+        "b64_json",
         description=(
             "The format in which the generated images are returned, "
             "one of 'url', or 'b64_json'."
-            )
+        ),
     )
     """Response format of the generated image"""
     max_retries: int = 2
@@ -162,7 +155,9 @@ class AzureDallEAPIWrapper(BaseModel):
                 "azure_endpoint": self.az_openai_endpoint,
                 "azure_deployment": self.az_openai_deployment_name,
                 "api_key": (
-                    self.az_openai_api_key.get_secret_value() if self.az_openai_api_key else None
+                    self.az_openai_api_key.get_secret_value()
+                    if self.az_openai_api_key
+                    else None
                 ),
                 "organization": self.openai_organization,
                 "timeout": self.request_timeout,
@@ -182,10 +177,9 @@ class AzureDallEAPIWrapper(BaseModel):
             pass
         return self
 
-
     def run(self, query: str) -> str:
         """Run query through OpenAI and parse result."""
-        
+
         try:
             if is_openai_v1():
                 response = self.client.generate(
@@ -197,20 +191,17 @@ class AzureDallEAPIWrapper(BaseModel):
                     style=self.style,
                     response_format=self.response_format,
                 )
-                image_revised_prompt = self.separator.join([
-                    item.revised_prompt 
-                    for item in response.data
-                    ])
+                image_revised_prompt = self.separator.join(
+                    [item.revised_prompt for item in response.data]
+                )
                 if self.response_format == "url":
-                    image_content = self.separator.join([
-                        item.url 
-                        for item in response.data
-                        ])
+                    image_content = self.separator.join(
+                        [item.url for item in response.data]
+                    )
                 elif self.response_format == "b64_json":
-                    image_content = self.separator.join([
-                        item.b64_json 
-                        for item in response.data
-                        ])
+                    image_content = self.separator.join(
+                        [item.b64_json for item in response.data]
+                    )
             else:
                 response = self.client.generate(
                     prompt=query,
@@ -221,21 +212,18 @@ class AzureDallEAPIWrapper(BaseModel):
                     style=self.style,
                     response_format=self.response_format,
                 )
-                image_revised_prompt = self.separator.join([
-                    item.revised_prompt 
-                    for item in response.data
-                    ])
+                image_revised_prompt = self.separator.join(
+                    [item.revised_prompt for item in response.data]
+                )
                 if self.response_format == "url":
-                    image_content = self.separator.join([
-                        item["url"] 
-                        for item in response["data"]
-                        ])
+                    image_content = self.separator.join(
+                        [item["url"] for item in response["data"]]
+                    )
                 elif self.response_format == "b64_json":
-                    image_content = self.separator.join([
-                        item["b64_json"] 
-                        for item in response["data"]
-                        ])
-        
+                    image_content = self.separator.join(
+                        [item["b64_json"] for item in response["data"]]
+                    )
+
             return image_revised_prompt, image_content
         except BadRequestError as e:
             raise e

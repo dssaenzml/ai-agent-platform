@@ -1,13 +1,12 @@
-
 import os
 import logging
 
 from fastapi import FastAPI, Depends
 from fastapi.responses import (
-    RedirectResponse, 
-    PlainTextResponse, 
-    JSONResponse, 
-    )
+    RedirectResponse,
+    PlainTextResponse,
+    JSONResponse,
+)
 from fastapi.exceptions import RequestValidationError
 
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
@@ -28,25 +27,25 @@ from .config import config
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
         logging.StreamHandler(),  # Log to console
-        logging.FileHandler('server.log')  # Log to file
-    ]
+        logging.FileHandler("server.log"),  # Log to file
+    ],
 )
 
 # Set logging levels for external libraries to WARNING or ERROR
-logging.getLogger('azure').setLevel(logging.WARNING)
-logging.getLogger('httpx').setLevel(logging.WARNING)
-logging.getLogger('pikepdf').setLevel(logging.WARNING)
-logging.getLogger('snowflake.connector').setLevel(logging.WARNING)
-logging.getLogger('matplotlib').setLevel(logging.WARNING)
-logging.getLogger('unstructured').setLevel(logging.WARNING)
-logging.getLogger('unstructured_inference').setLevel(logging.WARNING)
-logging.getLogger('pdfminer').setLevel(logging.WARNING)
-logging.getLogger('timm').setLevel(logging.WARNING)
-logging.getLogger('openai').setLevel(logging.WARNING)
-logging.getLogger('langchain_core').setLevel(logging.WARNING)
+logging.getLogger("azure").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("pikepdf").setLevel(logging.WARNING)
+logging.getLogger("snowflake.connector").setLevel(logging.WARNING)
+logging.getLogger("matplotlib").setLevel(logging.WARNING)
+logging.getLogger("unstructured").setLevel(logging.WARNING)
+logging.getLogger("unstructured_inference").setLevel(logging.WARNING)
+logging.getLogger("pdfminer").setLevel(logging.WARNING)
+logging.getLogger("timm").setLevel(logging.WARNING)
+logging.getLogger("openai").setLevel(logging.WARNING)
+logging.getLogger("langchain_core").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 
@@ -54,8 +53,8 @@ app = FastAPI(
     title=config.PROJECT_NAME,
     version=config.API_VERSION,
     description=config.API_DESC,
-    root_path=os.getenv('ROOT_PATH', '')
-    )
+    root_path=os.getenv("ROOT_PATH", ""),
+)
 
 # Add the middleware
 app.add_middleware(RequestLoggingMiddleware)
@@ -65,7 +64,7 @@ origins = [
     "http://localhost",
     "https://localhost",
     "http://fleetmateqa.sys.maqta.ae",
-    "https://fleetmateqa.sys.maqta.ae"
+    "https://fleetmateqa.sys.maqta.ae",
 ]
 
 app.add_middleware(
@@ -150,8 +149,8 @@ async def validation_exception_handler(request, exc):
 
 # Include the API router in the main application
 app.include_router(
-    api_router, 
-    prefix=config.API_PREFIX_STR, 
+    api_router,
+    prefix=config.API_PREFIX_STR,
     dependencies=[Depends(get_api_key)],  # Apply the logging dependency to the router
 )
 logger.info(f"Included API router with prefix: {config.API_PREFIX_STR}")

@@ -1,22 +1,20 @@
-
 from ..tool_wrapper.azure_send_email_api_wrapper import (
-    AzureCommunicationServiceSendEmailAPIWrapper as SendEmailAPIWrapper
-    )
+    AzureCommunicationServiceSendEmailAPIWrapper as SendEmailAPIWrapper,
+)
 
 from ..azure_send_email_tool import (
-    AzureCommunicationServiceSendEmailTool as SendEmailTool
-    )
+    AzureCommunicationServiceSendEmailTool as SendEmailTool,
+)
 
 from ...config import config
 
 ACS_CONNECTION_STRING = config.ACS_CONNECTION_STRING
 
 api_wrapper = SendEmailAPIWrapper(
-    connection_string=ACS_CONNECTION_STRING, 
-    )
+    connection_string=ACS_CONNECTION_STRING,
+)
 
 tool = SendEmailTool(api_wrapper=api_wrapper)
-
 
 
 # # Example usage
@@ -71,4 +69,3 @@ tool = SendEmailTool(api_wrapper=api_wrapper)
 #     # Send the email
 #     poller = email_client.begin_send(message)
 #     result = poller.result()
-

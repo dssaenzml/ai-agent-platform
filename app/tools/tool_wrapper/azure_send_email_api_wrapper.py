@@ -1,4 +1,3 @@
-
 import logging
 from typing import Any, Dict, Optional
 from typing_extensions import Self
@@ -13,7 +12,7 @@ class AzureCommunicationServiceSendEmailAPIWrapper(BaseModel):
     """
     Wrapper for Azure Communication Service email management.
 
-    This class provides methods to send emails and check their status 
+    This class provides methods to send emails and check their status
     using Azure Communication Services.
 
     Usage instructions:
@@ -44,7 +43,7 @@ class AzureCommunicationServiceSendEmailAPIWrapper(BaseModel):
     def initialize_client(self) -> None:
         """Initialize the Azure Communication Services Email Client.
 
-        This method sets up the EmailClient using the provided ACS 
+        This method sets up the EmailClient using the provided ACS
         connection string.
         """
         if not self.client:
@@ -53,8 +52,8 @@ class AzureCommunicationServiceSendEmailAPIWrapper(BaseModel):
             )
 
     def send_email(
-        self, 
-        message: Dict[str, Any], 
+        self,
+        message: Dict[str, Any],
     ) -> str:
         """Send an email using Azure Communication Services.
 
@@ -81,9 +80,9 @@ class AzureCommunicationServiceSendEmailAPIWrapper(BaseModel):
             print(f"Failed to get email status: {e}")
 
     def run(
-        self, 
-        message: Dict[str, Any], 
-        ) -> str:
+        self,
+        message: Dict[str, Any],
+    ) -> str:
         """Run the process to send an email and check its status.
 
         :param message: The email message content.
@@ -92,8 +91,8 @@ class AzureCommunicationServiceSendEmailAPIWrapper(BaseModel):
         """
         try:
             message_id = self.send_email(
-                message=message, 
-                )
+                message=message,
+            )
             message_status = self.check_email_status(message_id)
             return message_status
         except Exception as e:

@@ -1,12 +1,8 @@
-
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from ...llm_model.azure_llm import (
-    chat_model, 
-    )
+    chat_model,
+)
 
 ## Context-aware response
 # System Prompt
@@ -50,7 +46,7 @@ prompt = ChatPromptTemplate.from_messages(
         ("system", system_prompt),
         MessagesPlaceholder("chat_history"),
         ("human", "{query}"),
-    ], 
+    ],
 )
 
 # Chain

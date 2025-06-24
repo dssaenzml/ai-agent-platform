@@ -1,4 +1,3 @@
-
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
@@ -6,6 +5,7 @@ from pydantic import BaseModel, Field
 
 class ConversationInputChat(BaseModel):
     """Input for the chat endpoint."""
+
     query: str = Field(
         ...,
         description="The human query to the chat system.",
@@ -17,9 +17,9 @@ class ConversationInputChat(BaseModel):
         extra={"widget": {"type": "chat", "input": "username"}},
     )
     oauth_token: str = Field(
-        None, 
-        description="The Azure OAuth connection token.", 
-        )
+        None,
+        description="The Azure OAuth connection token.",
+    )
     uploaded_image_blob_URL: Optional[List[str]] = Field(
         [],
         description=(
@@ -42,6 +42,7 @@ class ConversationInputChat(BaseModel):
 
 class ConversationOutputChat(BaseModel):
     """Output for the chat endpoint."""
+
     context: List[dict]
     answer: str
     web_search: bool
@@ -52,6 +53,7 @@ class ConversationOutputChat(BaseModel):
 
 class AvatarConversationInputChat(BaseModel):
     """Input for the chat endpoint."""
+
     input: str = Field(
         ...,
         description="The human query to the chat system.",
@@ -61,11 +63,13 @@ class AvatarConversationInputChat(BaseModel):
 
 class AvatarConversationOutputChat(BaseModel):
     """Output for the chat endpoint."""
+
     answer: str
 
 
 class AudioConversationInputChat(BaseModel):
     """Input for the chat endpoint."""
+
     query: str = Field(
         ...,
         description="The base64 audio of the human query to the chat system.",
@@ -77,9 +81,9 @@ class AudioConversationInputChat(BaseModel):
         extra={"widget": {"type": "chat", "input": "username"}},
     )
     oauth_token: str = Field(
-        None, 
-        description="The Azure OAuth connection token.", 
-        )
+        None,
+        description="The Azure OAuth connection token.",
+    )
     uploaded_image_blob_URL: Optional[List[str]] = Field(
         [],
         description=(
@@ -102,4 +106,5 @@ class AudioConversationInputChat(BaseModel):
 
 class AudioConversationOutputChat(BaseModel):
     """Output for the chat endpoint."""
+
     answer: str

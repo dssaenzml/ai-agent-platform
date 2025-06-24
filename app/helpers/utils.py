@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import Any, Dict
@@ -21,7 +20,7 @@ from ..config import config
 logger = logging.getLogger(__name__)
 
 # get timezone for standard timestamps
-tzinfo = ZoneInfo('Asia/Dubai')
+tzinfo = ZoneInfo("Asia/Dubai")
 
 connection_parameters = {
     "account": config.SF_MAIN_ACCOUNT,
@@ -38,9 +37,7 @@ async def _per_request_config_modifier(
     config: Dict[str, Any], request: Request
 ) -> Dict[str, Any]:
     """Update the config"""
-    message_timereceived = datetime.now(tzinfo).strftime(
-        "%Y-%m-%d %H:%M:%S.%f %Z"
-        )
+    message_timereceived = datetime.now(tzinfo).strftime("%Y-%m-%d %H:%M:%S.%f %Z")
     config = config.copy()
     configurable = config.get("configurable", {})
 
@@ -50,14 +47,14 @@ async def _per_request_config_modifier(
 
         # Get the "username" value from the input data
         user_id = request_data.get("input", {}).get("username", None)
-        
+
         if user_id is None:
             error_message = "No username found. Please set "
             "a value in 'username'."
             logger.error(error_message)
             raise HTTPException(
                 status_code=400,
-                detail= error_message,
+                detail=error_message,
             )
 
         configurable["user_id"] = user_id
@@ -79,17 +76,15 @@ def _per_avatar_request_config_modifier(
 ) -> Dict[str, Any]:
     """Update the config"""
     message_timereceived = datetime.now(tzinfo)
-    message_timereceived = message_timereceived.strftime(
-        "%Y-%m-%d %H:%M:%S.%f %Z"
-        )
+    message_timereceived = message_timereceived.strftime("%Y-%m-%d %H:%M:%S.%f %Z")
     config = config.copy()
     configurable = config.get("configurable", {})
-    
+
     try:
         configurable["user_id"] = "avatar.rag@example.com"
         configurable["message_timereceived"] = message_timereceived
         config["configurable"] = configurable
-        
+
         return config
 
     except Exception as error_message:
@@ -104,24 +99,24 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
     def __init__(
         self,
         app,
-        snowflake_logging_table_name: str = "AI_AGENT_API_REQUESTS", 
-        snowflake_connect_timeout: int = 30, 
-        snowflake_connect_retries: int = 2, 
+        snowflake_logging_table_name: str = "AI_AGENT_API_REQUESTS",
+        snowflake_connect_timeout: int = 30,
+        snowflake_connect_retries: int = 2,
     ):
         super().__init__(app)
         self.snowflake_logging_table_name = snowflake_logging_table_name
         self.connection_parameters = connection_parameters
         self.snowflake_connect_timeout = snowflake_connect_timeout
         self.snowflake_connect_retries = snowflake_connect_retries
-        
+
     async def log(self, request_json: str, message_timereceived: str):
         attempt = 0
         while attempt < self.snowflake_connect_retries:
             try:
                 with connect(
-                    **self.connection_parameters, 
-                    timeout=self.snowflake_connect_timeout, 
-                    ) as connection:
+                    **self.connection_parameters,
+                    timeout=self.snowflake_connect_timeout,
+                ) as connection:
                     with connection.cursor() as cursor:
                         cursor.execute(
                             "CREATE TABLE IF NOT EXISTS "
@@ -132,7 +127,7 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
                             "MESSAGE_TIMERECEIVED TIMESTAMP, "
                             "LOGGING_TIMERECEIVED TIMESTAMP "
                             ");"
-                            )
+                        )
                         cursor.execute(
                             "INSERT INTO "
                             f"{self.connection_parameters['database']}."
@@ -148,17 +143,15 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
                             ";"
                         )
                 break
-            
+
             except Exception as error:
                 logger.error(error)
                 attempt += 1
                 time.sleep(2)
-        
+
     async def dispatch(self, request: Request, call_next):
-        message_timereceived = datetime.now(tzinfo).strftime(
-            "%Y-%m-%d %H:%M:%S.%f %Z"
-            )
-        
+        message_timereceived = datetime.now(tzinfo).strftime("%Y-%m-%d %H:%M:%S.%f %Z")
+
         # Log the POST request details
         if request.method == "POST":
             request_data = {
@@ -176,8 +169,8 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
                     error_message = {
                         "Message Processing Exception": (
                             f"Body too large to log ({body_size} bytes)"
-                            )
-                        }
+                        )
+                    }
                     request_data["body"] = error_message
                 else:
                     request_data["body"] = body
@@ -185,11 +178,11 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
                 error_message = {"Message Processing Exception": str(e)}
                 request_data["body"] = error_message
                 logger.error(json.dumps(request_data, indent=2))
-            
+
             logger.info(json.dumps(request_data, indent=2))
             await self.log(
-                json.dumps(request_data), 
-                message_timereceived, 
+                json.dumps(request_data),
+                message_timereceived,
             )
 
         try:
@@ -201,13 +194,12 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
             request_data["error"] = error_message
             logger.error(json.dumps(request_data, indent=2))
             await self.log(
-                json.dumps(request_data), 
-                message_timereceived, 
+                json.dumps(request_data),
+                message_timereceived,
             )
             raise HTTPException(
-                status_code=500, 
+                status_code=500,
                 detail=(
-                    "An internal server error occurred. "
-                    "Please try again later."
-                    ), 
-                )
+                    "An internal server error occurred. " "Please try again later."
+                ),
+            )

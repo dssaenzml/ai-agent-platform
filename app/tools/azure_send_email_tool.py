@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import Any, Dict, Optional, Type
@@ -12,7 +11,7 @@ from langchain_core.callbacks import (
 from langchain_core.tools import BaseTool, ToolException
 
 from .tool_wrapper.azure_send_email_api_wrapper import (
-    AzureCommunicationServiceSendEmailAPIWrapper
+    AzureCommunicationServiceSendEmailAPIWrapper,
 )
 
 from ..model.send_email_model import SendEmailInput
@@ -24,7 +23,7 @@ class AzureCommunicationServiceSendEmailTool(BaseTool):
     """
     Tool for sending emails using Azure Communication Services.
 
-    This tool uses the Azure Communication Services API to send emails 
+    This tool uses the Azure Communication Services API to send emails
     with or without attachments. The status of the sent email is returned.
 
     Attributes:
@@ -34,26 +33,26 @@ class AzureCommunicationServiceSendEmailTool(BaseTool):
         return_direct: Whether the tool should return the result directly.
         api_wrapper: The API wrapper for Azure Communication Services.
     """
+
     name: str = "SendEmailQuery"
     description: str = (
-        "useful for when you need to send an email with or "
-        "without attachments"
-        )
+        "useful for when you need to send an email with or " "without attachments"
+    )
     args_schema: Type[BaseModel] = SendEmailInput
     return_direct: bool = True
     api_wrapper: Type[AzureCommunicationServiceSendEmailAPIWrapper] = None
 
     def __init__(
-        self, 
-        api_wrapper: Type[AzureCommunicationServiceSendEmailAPIWrapper], 
-        ):
+        self,
+        api_wrapper: Type[AzureCommunicationServiceSendEmailAPIWrapper],
+    ):
         super().__init__()
         self.api_wrapper = api_wrapper
 
     def send_email(
-        self, 
-        message: Dict[str, Any], 
-        ) -> Optional[str]:
+        self,
+        message: Dict[str, Any],
+    ) -> Optional[str]:
         """
         Send an email using Azure Communication Services.
 
@@ -66,20 +65,20 @@ class AzureCommunicationServiceSendEmailTool(BaseTool):
         """
         try:
             status_response = self.api_wrapper.run(
-                message=message, 
-                )
+                message=message,
+            )
 
             logger.info("Email successfully sent.")
             return status_response
         except Exception as e:
             logger.error(f"Unable to send email due to: {e}")
             raise ToolException(e)
-    
+
     def _run(
-        self, 
-        message: Dict[str, Any], 
-        run_manager: Optional[CallbackManagerForToolRun] = None
-        ) -> Dict[str, Any]:
+        self,
+        message: Dict[str, Any],
+        run_manager: Optional[CallbackManagerForToolRun] = None,
+    ) -> Dict[str, Any]:
         """
         Synchronously send an email.
 
@@ -93,28 +92,28 @@ class AzureCommunicationServiceSendEmailTool(BaseTool):
         """
         try:
             status_response = self.send_email(
-                message=message, 
-                )
+                message=message,
+            )
             return {
-                "status": "success", 
-                "status_response": status_response, 
-                }
+                "status": "success",
+                "status_response": status_response,
+            }
         except ToolException as e:
             logger.error(f"Unable to send email due to: {e}")
             return {
-                "status": "failure", 
-                "message": "Sending email failed.", 
-                }
+                "status": "failure",
+                "message": "Sending email failed.",
+            }
         except Exception as e:
             logger.error(f"Unable to send email due to: {e}")
             return {
-                "status": "failure", 
-                "message": "Sending email failed.", 
-                }
+                "status": "failure",
+                "message": "Sending email failed.",
+            }
 
     async def _arun(
-        self, 
-        message: Dict[str, Any], 
+        self,
+        message: Dict[str, Any],
         run_manager: Optional[AsyncCallbackManagerForToolRun] = None,
     ) -> str:
         """
@@ -129,6 +128,6 @@ class AzureCommunicationServiceSendEmailTool(BaseTool):
             A dictionary containing the status of the sent email.
         """
         return self._run(
-            message=message, 
-            run_manager=run_manager.get_sync(), 
-            )
+            message=message,
+            run_manager=run_manager.get_sync(),
+        )

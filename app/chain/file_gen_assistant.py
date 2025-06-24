@@ -1,12 +1,8 @@
-
-from langchain_core.prompts import (
-    ChatPromptTemplate,
-    MessagesPlaceholder
-)
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 from ..llm_model.azure_llm import (
-    chat_model, 
-    )
+    chat_model,
+)
 
 # System Prompt
 system_prompt = (
@@ -69,12 +65,12 @@ prompt = ChatPromptTemplate.from_messages(
         ("system", system_prompt),
         MessagesPlaceholder("chat_history"),
         (
-            "human", 
+            "human",
             "Stage of the conversation: \n\n {conversation_stage} \n\n"
             "Here is the latest human query: \n\n {query} \n\n"
             "Here is the image context: \n\n {image_context} \n\n"
             "Formulate a proper response.",
-            ),
+        ),
     ]
 )
 

@@ -1,16 +1,13 @@
-
 from langchain_core.prompts import (
     ChatPromptTemplate,
     MessagesPlaceholder,
 )
 
 from ...llm_model.azure_llm import (
-    helper_model, 
-    )
-
-from ...model.agent_finance.bot_model import (
-    FinanceDetails
+    helper_model,
 )
+
+from ...model.agent_finance.bot_model import FinanceDetails
 
 # Add tools to llm
 llm_with_tool = helper_model.bind_tools([FinanceDetails])
@@ -51,11 +48,11 @@ prompt = ChatPromptTemplate.from_messages(
         ("system", system_prompt),
         MessagesPlaceholder("chat_history"),
         (
-            "human", 
+            "human",
             "Here is the latest human query: \n\n {query} \n\n"
             "Here is the image context: \n\n {image_context} \n\n"
             "Gather the necessary details.",
-            ),
+        ),
     ]
 )
 
