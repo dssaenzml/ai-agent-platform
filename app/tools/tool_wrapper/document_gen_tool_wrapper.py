@@ -1,11 +1,16 @@
 import base64
 import io
 import logging
-from typing import Any, Callable, Dict, Optional
+from typing import TYPE_CHECKING, Any, Callable, Dict, Optional
 
 from docx import Document
 from pydantic import BaseModel, model_validator
 from typing_extensions import Self
+
+if TYPE_CHECKING:
+    from docx.document import Document as DocxDocument
+else:
+    DocxDocument = object  # fallback for runtime
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +28,7 @@ class DocumentGeneratorToolWrapper(BaseModel):
     2. Use the `generate_document` method to create and retrieve the document.
     """
 
-    document_template: Optional[Callable[[Document, Dict[str, Any]], None]] = None
+    document_template: Optional[Callable[["DocxDocument", Dict[str, Any]], None]] = None
 
     @model_validator(mode="after")
     def validate_environment(self) -> Self:
